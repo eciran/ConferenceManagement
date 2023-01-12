@@ -1,0 +1,13 @@
+spring.datasource.url: jdbc:mysql://projectdb.czcc2jxy0l5l.eu-west-3.rds.amazonaws.com:3306/FinalProjectDB
+spring.datasource.username: root
+spring.datasource.password: projectDB123
+spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+spring.jpa.show-sql: true
+spring.jpa.hibernate.ddl-auto: update
+spring.mvc.view.prefix: /view/static/my/
+spring.mvc.view.suffix: .jsp
+spring.thymeleaf.check-template-location: true
+server.error.whitelabel.enabled : false
+server.error.path: /error
+jwt.secret: ConferenceManagementSystem
+jwt.get.token.uri: /login

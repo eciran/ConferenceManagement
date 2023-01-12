@@ -1,0 +1,10 @@
+spring.mail.host: smtp-relay.sendinblue.com
+spring.mail.port: 587
+spring.mail.username: info@signoraonline.com
+spring.mail.password: 5IfxUQrSywNmC0H9
+spring.mail.properties.mail.smtp.auth: true
+spring.mail.properties.mail.smtp.starttls.enable: true
+mail.smtp.debug: true
+
+mailFrom: info@signoraonline.com
+apikey: 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
