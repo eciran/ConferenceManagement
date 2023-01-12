@@ -2,6 +2,8 @@ package com.project.ConferenceManagement.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import com.project.ConferenceManagement.entity.PasswordResetToken;
 import com.project.ConferenceManagement.entity.UserEntity;
 import com.project.ConferenceManagement.entity.VerificationToken;
+import com.project.ConferenceManagement.model.AssignmentModel;
+import com.project.ConferenceManagement.model.RefResponseModel;
 import com.project.ConferenceManagement.model.UserModel;
 import com.project.ConferenceManagement.repository.PasswordResetTokenRepository;
 import com.project.ConferenceManagement.repository.UserRepository;
@@ -108,5 +112,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean checkIfValidOldPassword(String password, String oldPassword) {
 		return passwordEncoder.matches(oldPassword, password);
+	}
+	@Override
+	public List<RefResponseModel> getRefListByEvaluation(List<RefResponseModel> list) {
+		for (RefResponseModel refResponseModel : list) {
+			Optional<UserEntity> user = userRepository.findById(refResponseModel.getRefId());
+			if(!user.isEmpty()) {
+				refResponseModel.setRefName(user.get().getFirstName());
+				refResponseModel.setRefLastName(user.get().getLastName());
+			}
+		}	
+		return list;
 	}
 }

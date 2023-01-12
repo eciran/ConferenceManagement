@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.ConferenceManagement.entity.UserEntity;
+import com.project.ConferenceManagement.model.AssignmentModel;
 import com.project.ConferenceManagement.model.EvaluationModel;
+import com.project.ConferenceManagement.model.RefResponseModel;
 import com.project.ConferenceManagement.model.UserResponse;
 import com.project.ConferenceManagement.repository.UserRepository;
 import com.project.ConferenceManagement.service.EvaluationService;
@@ -68,8 +70,7 @@ public class EvaluationController {
 	 @PostMapping("/getEvaluationTableForAll")
 	 public List<EvaluationModel> getEvaluationTableForRef(){
 		return evaluationServiceImpl.getEvaluationTableForAll();
-	 }
-	 
+	 }	 
 	 
 }
 	  

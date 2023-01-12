@@ -1,8 +1,11 @@
 package com.project.ConferenceManagement.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.project.ConferenceManagement.entity.UserEntity;
+import com.project.ConferenceManagement.model.AssignmentModel;
+import com.project.ConferenceManagement.model.RefResponseModel;
 import com.project.ConferenceManagement.model.UserModel;
 
 public interface UserService {
@@ -16,4 +19,5 @@ public interface UserService {
 	void changePassword(UserEntity user, String newPassword);
 	boolean checkIfValidOldPassword(String newPassword, String oldPassword);
 	void loginUser(UserEntity userModel );
+	List<RefResponseModel> getRefListByEvaluation(List<RefResponseModel> list);
 }

@@ -349,12 +349,34 @@
                       { data: "key" },
                       { data: "filePath" },
                       { data: "description"},
-                      { data: "status"},
-                      { data: "point"},
+                      { data: null,
+                    	  render: function ( data, type, row ) {
+                    		  switch(data.status){
+                    		  	case 0 : return 'Başvuru Alındı';
+										 break;
+                    		  	case 1 : return 'Değerlendirme Aşamasında';
+										 break;
+                    		  	case 2 : return 'Puanlama Tamamlandı';
+										 break;
+                    		  	case 3 : return 'Başvuru Sonuçlandı';
+								 		 break;
+                    		  }
+                    	  }  
+                      },
+                      { data: null,
+                    	  render: function ( data, type, row ) {
+                    		if(data.point==0){
+                    			return null;
+                    		}
+                    		else{
+                    			return data.point;
+                    		}
+                    	  }    
+                      },
                       {
                     	  data: null,
                     	  render: function ( data, type, row ) {
-                    	    return '<a href="../upfiles/'+data.filePath+'" target="_blank" id="btnPdf" type="button" class="btn btn-primary form-control">PDF Görüntüle</button>';
+                    	    return '<a href="../upfiles/'+data.filePath+'" target="_blank" id="btnPdf" type="button" class="btn btn-primary btn-sm form-control">PDF Görüntüle</button>';
                     	  }
                     	}
                                      
@@ -370,7 +392,6 @@
   <script src="../global/js/jwtDecode.js"></script>
   <script src="../global/js/jwtAuthenticate.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../global/js/argon-dashboard.min.js?v=2.0.4"></script>
   <script type="text/javascript" charset=utf-8 src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 </body>
 

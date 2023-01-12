@@ -28,7 +28,7 @@ public class EvaluationServiceImpl implements EvaluationService{
 			entity.setMatchKey(evaluationModel.getKey());
 			entity.setTitle(evaluationModel.getTitle());
 			entity.setUniName(evaluationModel.getUniName());
-			entity.setStatus(1);
+			entity.setStatus(0);
 			evaluationRepository.save(entity);
 			return "Success";
 		} catch (IllegalArgumentException e) {
@@ -49,9 +49,12 @@ public class EvaluationServiceImpl implements EvaluationService{
 				user.setPassword("");
 				for (EvaluationEntity evaluationEntity : list) {
 					EvaluationModel eva= new EvaluationModel();
+					eva.setId(evaluationEntity.getId());
 					eva.setFilePath(evaluationEntity.getFilePath());
 					eva.setKey(evaluationEntity.getMatchKey());
 					eva.setTitle(evaluationEntity.getTitle());
+					eva.setStatus(evaluationEntity.getStatus());
+					eva.setPoint(evaluationEntity.getPoint());
 					eva.setUser(user);
 					eva.setUniName(evaluationEntity.getUniName());
 					eva.setDescription(evaluationEntity.getDescription());
@@ -72,10 +75,13 @@ public class EvaluationServiceImpl implements EvaluationService{
 			allEntityList=evaluationRepository.findAll();
 			for (EvaluationEntity evaluationEntity : allEntityList) {
 				EvaluationModel eva=new EvaluationModel();
+				eva.setId(evaluationEntity.getId());
 				eva.setFilePath(evaluationEntity.getFilePath());
 				eva.setKey(evaluationEntity.getMatchKey());
 				eva.setTitle(evaluationEntity.getTitle());
 				evaluationEntity.getUser().setPassword("");
+				eva.setStatus(evaluationEntity.getStatus());
+				eva.setPoint(evaluationEntity.getPoint());
 				eva.setUser(evaluationEntity.getUser());
 				eva.setUniName(evaluationEntity.getUniName());
 				eva.setDescription(evaluationEntity.getDescription());
