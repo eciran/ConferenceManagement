@@ -366,6 +366,11 @@
       	     });
    	    	$('#recipient_id').val(table_data.id);
    	    	$('#recipient_name').val(table_data.title);
+	   	     var obj={};
+				obj["email"]=$user;
+				obj["key"]=table_data.key;
+			$("#refList").empty();
+			 getRefList(obj);
    	     });
    	   $('#myTable tbody').on( 'click', '#btnRefList', function (){	 
    			$('.loading-spinner').css("display","");
@@ -375,10 +380,9 @@
   	     });
     	 if($user!=null){
     		 getEvaluationTable();
-    		 getRefList();
     	  }
     	 $("#btnRefAssigment").click(function(){
-    		 var selected = $('#refList').select2("data");
+    		 var selected = $('#refList').select2("data");   		 
     		 if(selected.length<3){
     			 Swal.fire({
 					  title:'Uyarı',
@@ -457,12 +461,12 @@
     	 	});
     	 }
     	 
-    	 function getRefList(){
+    	 function getRefList(obj){
     		 $.ajax({
     		        url: "/getRefList",
     		        type: 'POST',
     		        dataType: 'json',
-    		        data: JSON.stringify(),
+    		        data: JSON.stringify(obj),
     		        contentType: 'application/json',
     		        mimeType: 'application/json',
     		        async: true,
@@ -562,9 +566,13 @@
                     	  render: function ( data, type, row ) {
                     		  switch(data.status){
                     		  	case 0 : return '<button id="btnAddRef" type="button" class="btn btn-secondary  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#exampleModalMessage">Atama Yap</button>';
-										 break;
+							    break;
                     		  	case 1 : return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Listesi</button>';
-
+								break;
+                    		  	case 2 : return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Listesi</button>';
+								break;
+                    		  	case 3 : return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Listesi</button>';
+								break;
                     		  }
                     	  }
                       }
@@ -580,7 +588,7 @@
     });
   </script>
   <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://buttons.github.io/buttons.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="../global/js/jwtDecode.js"></script>
   <script src="../global/js/jwtAuthenticate.js"></script>

@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ConferenceManagement.entity.AssignmentEntity;
 import com.project.ConferenceManagement.model.AssignmentModel;
+import com.project.ConferenceManagement.model.EvaluationModel;
 import com.project.ConferenceManagement.model.RefResponseModel;
 import com.project.ConferenceManagement.service.AssignmentService;
 import com.project.ConferenceManagement.service.UserService;
@@ -23,8 +25,8 @@ public class AssignmentController {
 	UserService userServiceImpl;
 	
 	@PostMapping("/getRefList")
-	public List<RefResponseModel> getRefList(){
-		return assignmentService.getRefList();
+	public List<RefResponseModel> getRefList(@RequestBody EvaluationModel evaluationModel){
+		return assignmentService.getRefList(evaluationModel);
 	}
 	
 	@PostMapping("/setAssignmentList")

@@ -50,7 +50,7 @@ $(document).ready(function(){
 		 var key=$("#evaluation_key").val();
 		 var upfiles=$("#btnUpload").text();
 		 var desc=$("#evaluation_description").val();
-		 if(title!=""&&uni!=""&&key!=""&&upfiles!="Dosya Yükleme"&&desc!=""){
+		 if(!(title!=""||uni!=""||key!=""||upfiles!="Dosya Yükleme"||desc!="")){
 				var toApply={}
 					toApply["email"]=$user;
 					toApply["title"]=title;
@@ -59,6 +59,16 @@ $(document).ready(function(){
 					toApply["filePath"]=upfiles;
 					toApply["description"]=desc;
 					sendAjaxToApply(toApply);
+			}
+			else{
+			    $('.required ').css('border-color','#f5365c');
+			    $('#btnUpload ').css('background-color','#f5365c');
+			    errorAlert("Başvuru");
+				var millisecondsToWait = 3000;
+             	setTimeout(function() {
+                $('.required ').css('border-color','none');
+                $('#btnUpload ').css('background-color','#5e72e4');
+             }, millisecondsToWait);
 			}
 		});
 		
@@ -95,28 +105,7 @@ function getUserInfo(){
 	        timeout: 600000,	      
 	        success: function (data) {
 				$("#result1").css("display", "none");
-//				document.getElementById("uyelik_isim").value = data.firstName;
-	//			document.getElementById("uyelik_soyad").value = data.lastName;
-		//		document.getElementById("uyelik_phone").value=data.phoneNumber;
-			//	var phoneNumber= data.phoneNumber;
-				if(phoneNumber=="1111111111"){
-					const Toast = Swal.mixin({
-					  toast: true,
-					  position: 'top-end',
-					  showConfirmButton: false,
-					  timer: 5000,
-					  timerProgressBar: true,
-					  didOpen: (toast) => {
-					    toast.addEventListener('mouseenter', Swal.stopTimer)
-					    toast.addEventListener('mouseleave', Swal.resumeTimer)
-					  }
-					})
-					
-					Toast.fire({
-					  icon: 'warning',
-					  title: 'Lütfen telefon numarasını güncelleyiniz'
-					})
-				}
+				successAlert("Başvuru");
 	        },
 	        error: function (e) {
               

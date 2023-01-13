@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name="evaluation")
 public class EvaluationEntity {
 	@Id

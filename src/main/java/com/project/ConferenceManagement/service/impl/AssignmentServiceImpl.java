@@ -11,11 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.project.ConferenceManagement.entity.AssignmentEntity;
 import com.project.ConferenceManagement.entity.EvaluationEntity;
+import com.project.ConferenceManagement.entity.KeyEntity;
 import com.project.ConferenceManagement.entity.UserEntity;
 import com.project.ConferenceManagement.model.AssignmentModel;
+import com.project.ConferenceManagement.model.EvaluationModel;
 import com.project.ConferenceManagement.model.RefResponseModel;
 import com.project.ConferenceManagement.repository.AssignmentRepository;
 import com.project.ConferenceManagement.repository.EvaluationRepository;
+import com.project.ConferenceManagement.repository.UserKeyRepository;
 import com.project.ConferenceManagement.repository.UserRepository;
 import com.project.ConferenceManagement.service.AssignmentService;
 
@@ -31,18 +34,25 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Autowired
 	EvaluationRepository evaluationRepository;
 	
+	@Autowired
+	UserKeyRepository keyRepository;
 	@Override
-	public List<RefResponseModel> getRefList() {
+	public List<RefResponseModel> getRefList(EvaluationModel evaluationModel) {
 		List<UserEntity> userList= new ArrayList<>();
 		List<RefResponseModel> refList=new ArrayList<>();
+		List<KeyEntity> keyList= new ArrayList<>();
 		try {
-			userList=userRepository.getRefList();
-			for (UserEntity userEntity : userList) {
-				RefResponseModel ref=new RefResponseModel();
-				ref.setRefId(userEntity.getId());
-				ref.setRefLastName(userEntity.getLastName());
-				ref.setRefName(userEntity.getFirstName());
-				refList.add(ref);
+			keyList=keyRepository.findAllKeyByRef(evaluationModel.getKey());
+			if(keyList!=null&&keyList.size()>0) {
+					for (KeyEntity keyEntity : keyList) {
+						if(!(keyEntity.getUser().getEmail().equals(evaluationModel.getEmail()))) {
+							RefResponseModel ref=new RefResponseModel();
+							ref.setRefId(keyEntity.getUser().getId());
+							ref.setRefLastName(keyEntity.getUser().getLastName());
+							ref.setRefName(keyEntity.getUser().getFirstName());
+							refList.add(ref);
+						}	
+					}
 			}
 		}catch (IllegalArgumentException e) {
 			return null;

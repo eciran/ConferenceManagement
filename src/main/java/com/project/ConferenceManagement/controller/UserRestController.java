@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ConferenceManagement.entity.UserEntity;
 import com.project.ConferenceManagement.model.PasswordModel;
+import com.project.ConferenceManagement.model.UserKeyModel;
 import com.project.ConferenceManagement.model.UserResponse;
 import com.project.ConferenceManagement.repository.UserRepository;
 import com.project.ConferenceManagement.service.UserService;
@@ -90,4 +91,14 @@ public class UserRestController {
 		return Pattern.compile("^(?:(?=.*?\\p{N})(?=.*?[\\p{S}\\p{P} ])(?=.*?\\p{Lu})(?=.*?\\p{Ll}))[^\\p{C}]{8,16}$")
 				.matcher(password).matches();
 	}
+	@RequestMapping(value = "/setUserRoleAndKey")
+	public String setUserRoleAndKey(@RequestBody UserKeyModel userKey) {
+		if(userKey.getKeyList().length>0 && userKey.getRole()!=null) {
+			return userService.setUserRoleAndKey(userKey);
+		}
+		else {
+			return null;
+		}
+	}
+		
 }

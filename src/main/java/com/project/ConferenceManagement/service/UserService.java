@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.project.ConferenceManagement.entity.UserEntity;
 import com.project.ConferenceManagement.model.AssignmentModel;
 import com.project.ConferenceManagement.model.RefResponseModel;
+import com.project.ConferenceManagement.model.UserKeyModel;
 import com.project.ConferenceManagement.model.UserModel;
 
 public interface UserService {
@@ -20,4 +21,5 @@ public interface UserService {
 	boolean checkIfValidOldPassword(String newPassword, String oldPassword);
 	void loginUser(UserEntity userModel );
 	List<RefResponseModel> getRefListByEvaluation(List<RefResponseModel> list);
+	String setUserRoleAndKey(UserKeyModel userKey);
 }

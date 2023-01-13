@@ -13,13 +13,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.ConferenceManagement.entity.KeyEntity;
 import com.project.ConferenceManagement.entity.PasswordResetToken;
 import com.project.ConferenceManagement.entity.UserEntity;
 import com.project.ConferenceManagement.entity.VerificationToken;
 import com.project.ConferenceManagement.model.AssignmentModel;
 import com.project.ConferenceManagement.model.RefResponseModel;
+import com.project.ConferenceManagement.model.UserKeyModel;
 import com.project.ConferenceManagement.model.UserModel;
 import com.project.ConferenceManagement.repository.PasswordResetTokenRepository;
+import com.project.ConferenceManagement.repository.UserKeyRepository;
 import com.project.ConferenceManagement.repository.UserRepository;
 import com.project.ConferenceManagement.repository.VerificationTokenRepository;
 import com.project.ConferenceManagement.service.UserService;
@@ -39,6 +42,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordResetTokenRepository passwordResetTokenRepository;	
 		
+	@Autowired
+	private UserKeyRepository userKeyRepository;
+	
 	@Override
 	public void loginUser(UserEntity userModel) {
 
@@ -123,5 +129,28 @@ public class UserServiceImpl implements UserService {
 			}
 		}	
 		return list;
+	}
+
+	@Override
+	public String setUserRoleAndKey(UserKeyModel userKey) {
+		String ret="";
+		try {
+			UserEntity user=  userRepository.findByEmail(userKey.getUserEmail());
+			if (user!=null) {
+				user.setRole(userKey.getRole());
+				for (int i = 0; i < userKey.getKeyList().length; i++) {
+					KeyEntity keyEntity= new KeyEntity();
+					keyEntity.setUser(user);
+					keyEntity.setMatchKey(userKey.getKeyList()[i]);;
+					userKeyRepository.save(keyEntity);
+				}
+			}
+			userRepository.save(user);
+			ret="Success";
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			ret="Failed";
+		}
+		return ret;
 	}
 }
