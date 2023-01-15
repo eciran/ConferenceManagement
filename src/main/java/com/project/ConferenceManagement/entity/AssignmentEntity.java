@@ -30,6 +30,7 @@ public class AssignmentEntity {
 	nullable = false,
 	foreignKey = @ForeignKey(name="FK_REF_ID"))
 	private UserEntity referee;
+	private boolean status;
 	
 	public Long getId() {
 		return id;
@@ -48,6 +49,12 @@ public class AssignmentEntity {
 	}
 	public void setReferee(UserEntity referee) {
 		this.referee = referee;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	

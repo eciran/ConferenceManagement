@@ -5,6 +5,7 @@ public class AssignmentModel {
 	private Long id;
 	private Long evaluationId;
 	private Long[] refereeList;
+	private boolean status;
 	public Long getId() {
 		return id;
 	}
@@ -22,6 +23,12 @@ public class AssignmentModel {
 	}
 	public void setRefereeList(Long[] refereeList) {
 		this.refereeList = refereeList;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 

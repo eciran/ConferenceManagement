@@ -120,18 +120,6 @@ public class UserServiceImpl implements UserService {
 		return passwordEncoder.matches(oldPassword, password);
 	}
 	@Override
-	public List<RefResponseModel> getRefListByEvaluation(List<RefResponseModel> list) {
-		for (RefResponseModel refResponseModel : list) {
-			Optional<UserEntity> user = userRepository.findById(refResponseModel.getRefId());
-			if(!user.isEmpty()) {
-				refResponseModel.setRefName(user.get().getFirstName());
-				refResponseModel.setRefLastName(user.get().getLastName());
-			}
-		}	
-		return list;
-	}
-
-	@Override
 	public String setUserRoleAndKey(UserKeyModel userKey) {
 		String ret="";
 		try {

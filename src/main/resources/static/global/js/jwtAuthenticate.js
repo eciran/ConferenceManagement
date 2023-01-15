@@ -5,11 +5,14 @@ function user_logOut(e) {
         (token = null),
         (decoded = null),
         localStorage.removeItem("token"),
-        null == e && logOut_alert();
+        null == e;
 }
+ $('#userLogout').click(function(){
+		user_logOut();
+	 });
 function logOut_alert() {
     Swal.fire({
-        title: "Güvenli şekilde çıkış yapıldı",
+        title: "Güvenli şekilde çıkış yapılıyor",
         position: "top",
         timer: 700,
         showClass: { popup: "\n\t      animate__animated\n\t      animate__fadeInDown\n\t      animate__faster\n\t    " },
@@ -17,6 +20,11 @@ function logOut_alert() {
         grow: "row",
         showConfirmButton: !1,
     });
+    var millisecondsToWait = 700;
+             	setTimeout(function() {
+                window.location.replace("../login.html");
+             }, millisecondsToWait);
+ 
 }
 $(document).ready(function () {
     var e = localStorage.token;
@@ -26,7 +34,7 @@ $(document).ready(function () {
         const sub=n.sub.split("_");
         null != n && n.exp > t
             ? ($(".userOffline").attr("hidden", !0),
-              $("#userOnline").text(sub[0]),
+             //$("#userOnline").text(sub[0]),
               ($user = sub[0]),($role = sub[1]))
             : user_logOut(t);
     }
