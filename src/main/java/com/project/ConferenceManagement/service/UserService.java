@@ -19,4 +19,7 @@ public interface UserService {
 	boolean checkIfValidOldPassword(String newPassword, String oldPassword);
 	void loginUser(UserEntity userModel );
 	String setUserRoleAndKey(UserKeyModel userKey);
+	Boolean getRefereInterestListCount(String userEmail);
+	List<UserModel> getAuthorList();
+	List<UserModel> getRefList();
 }

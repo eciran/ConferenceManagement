@@ -37,6 +37,17 @@ $(document).ready(function () {
              //$("#userOnline").text(sub[0]),
               ($user = sub[0]),($role = sub[1]))
             : user_logOut(t);
+        if($role=="OKB"){
+			$(".OKBNotSee").attr("hidden",true);
+		}
+		else{
+			$(".OKBSee").attr("hidden",true);
+			$(".AUTHORSee").attr("hidden",false);
+			if($role=="REFEREE"){
+				$(".REFSee").attr("hidden",false);
+			}
+			
+		}
     }
     else{
 	    window.location.replace("../login.html");

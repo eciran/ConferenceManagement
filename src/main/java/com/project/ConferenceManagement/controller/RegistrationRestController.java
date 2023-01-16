@@ -28,8 +28,6 @@ public class RegistrationRestController {
 	@Autowired
 	private MailService mailService; 
 	
-	@Autowired
-	private JwtAuthenticationController jwtController;
 					
 	@PostMapping("/register")
 	public String registerUser(@RequestBody UserModel userModel) {

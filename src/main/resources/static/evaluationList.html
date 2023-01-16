@@ -65,15 +65,7 @@
             <span class="nav-link-text ms-1">Anasayfa</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="../profile.html">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Profil</span>
-          </a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item OKBNotSee" >
           <a class="nav-link " href="../toApply.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-book-bookmark text-success text-sm opacity-10"></i>
@@ -81,7 +73,7 @@
             <span class="nav-link-text ms-1">Başvuru</span>
           </a>
         </li>
-         <li class="nav-item">
+         <li class="nav-item OKBNotSee">
           <a class="nav-link " href="../pendingApplications.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-books text-primary text-sm opacity-10"></i>
@@ -89,7 +81,7 @@
             <span class="nav-link-text ms-1">Yapılan Başvurular</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item REFSee" hidden="true">
           <a class="nav-link " href="../assignedApplications.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -97,7 +89,7 @@
             <span class="nav-link-text ms-1">Değerlendirme Listesi</span>
           </a>
         </li>
-         <li class="nav-item">
+         <li class="nav-item OKBSee">
           <a class="nav-link " href="../evaluationList.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-key-25 text-dark text-sm opacity-10"></i>
@@ -135,7 +127,7 @@
            
              <li class="nav-item px-3 d-flex align-items-center">
               <a href="" class="nav-link text-white font-weight-bold px-0">
-                <i class="fa fa-sign-out me-sm-1"></i>
+                <i class="fa fa-sign-out me-sm-1" id="userLogout"></i>
               </a>
             </li>
           </ul>
@@ -157,14 +149,14 @@
                   <table class="table card-table" id="myTable">
                     <thead>
                       <tr class="text-nowrap">
+                    	  <th>Başvuru Sahibi</th>
 	                 	 <th>Başlık</th>
 	                  	 <th>Kurum Adı</th>
 	                     <th>Başvuru Konusu</th>
-	                     <th>Dosya Adı</th>
 	                     <th>Açıklama</th>
 	                     <th>Başvuru Durumu</th>
 	                     <th>Puan</th>
-	                     <th>#</th>
+	                     <th>Dosya</th>
 	                     <th>Hakem</th>
                       </tr>
                     </thead>
@@ -212,7 +204,7 @@
           <div class="modal-body">
             <form>
             <div class="form-group" style="display:none">               
-                <input type="text" class="form-control" value="Creative Tim" id="recipient_id">
+                <input type="text" class="form-control" id="recipient_id">
               </div>
              <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Atama Yapılan Proje:</label>
@@ -265,6 +257,47 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="OKBFinishModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nihai Karar Aşaması</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	      <div class="form-group">
+			<label for="exampleFormControlTextarea">Hakem Puan Ortalaması</label>
+				<select class="form-control required" id="refAllScoreAv" disabled="disabled">
+					<option value="1">1 - Kesin Red</option>
+					<option value="2">2 - Zayıf Red</option>
+					<option value="3">3 - Nötr</option>
+					<option value="4">4 - Kabul</option>
+					<option value="5">5 - Kesin Kabul</option>
+				</select>	
+	      </div>
+	      <div class="form-group">
+			<h4 style="text-align: center">NİHAİ KARAR</h4>
+		<div class="form-check mb-3">
+		  <input class="form-check-input" type="radio" name="flexRadioDefault" id="radioKabul">
+		  <label class="custom-control-label" for="customRadio1">KABUL EDİLDİ</label>
+		</div>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" name="flexRadioDefault" id="radioRet">
+		  <label class="custom-control-label" for="customRadio2">REDDEDİLDİ</label>
+		</div>
+			
+			
+	      </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-warning" id="btnOKBFinishEvaluation" data-bs-dismiss="modal">Başvuruyu Sonuçlandır</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!--   Core JS Files   -->
    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -293,6 +326,9 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
     $(document).ready(function(){
+    	if($role!="OKB"){
+    		window.location.replace("../dashboard.html");
+    	}
     	 var table = $('#myTable').dataTable();
    	    $('#myTable tbody').on( 'click', '#btnAddRef', function (){
    	    	$('.js-example-basic-multiple').select2({
@@ -341,22 +377,136 @@
     	 
     	 $('#OKBFinish').click(function(){
     		 var obj={};
-    		 obj["evaluationId"]=$('#recipient_id').val();
+   			obj["id"]=table_data.id;
     		 $('.loading-spinner').css("display","");
     		 sendAjaxChangeStatusEva(obj);
    		 });
-    	 
-    	 function sendAjaxChangeStatusEva(obj){
+    	 $('#btnOKBFinishEvaluation').click(function(){
+    		 var kabul = document.getElementById("radioKabul").checked;
+    		 var ret = document.getElementById("radioRet").checked;
+    		 if(kabul && ret){
+    			 Swal.fire({
+					icon:'warning',
+ 			        title: "En az bir sonuç seçilmelidir",
+ 			        position: "center",
+ 			        timer: 1000,
+ 			        showConfirmButton: !1,
+ 			    });
+    		 }else{
+    			 var obj={};
+       			 obj["id"]=table_data.id;
+       			 if(kabul){
+       				obj["point"]=2; 
+       			 }else{
+       				obj["point"]=1; 
+       			 } 
+       			$('.loading-spinner').css("display","");
+       			 sendAjaxEvulationFinishByOKB(obj);
+    		 }
+   		 });
+    	 function sendAjaxEvulationFinishByOKB(obj){
     		 $.ajax({
-    		        url: "/changeStatusEva",
+    		        url: "/setEvulationFinishByOKB",
     		        type: 'POST',
     		        data: JSON.stringify(obj),
     		        contentType: 'application/json',
     		        async: true,
     		        success: function (data) {
     		        	$('.loading-spinner').css("display","none");
-    		        	
-   						$('#exampleModalMessage').modal('hide');
+    		        	$('#OKBFinishModel').modal('hide');
+  		        		if(data){
+  		        			Swal.fire({
+  	   						  title:'Tebrikler',
+  	   					      text:'Başvuru Başarıyla Tamamlandı',
+  	   						  icon:'success',
+  	   						  confirmButtonColor: "#696cff" 
+  	   						})
+  		        		}else{
+  		        			Swal.fire({
+  	   						  title:'HATA',
+  	   					      text:'Başvuru Sonlandırılamadı',
+  	   						  icon:'error',
+  	   						  confirmButtonColor: "#696cff" 
+  	   						})
+  		        		}
+  		        		getEvaluationTable();
+    		        },
+    		 		error: function(data){
+    		 			$('.loading-spinner').css("display","none");
+    		 			Swal.fire({
+   						  title:'HATA',
+   					      text:'Başvuru Sonlandırılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						})
+    		 		}
+    	 	});
+    	 }
+    	 
+    	 $('#myTable tbody').on( 'click', '#btnOKBFinishModel', function (){
+    		 var obj={};
+   			 obj["evaluation_id"]=table_data.id;
+    		 $('.loading-spinner').css("display","");
+    		 getRefAllScore(obj);
+   		 });
+    	 var refScoreAllResult=0;
+    	 function getRefAllScore(obj){
+    		 $.ajax({
+    		        url: "/getRefAllScore",
+    		        type: 'POST',
+    		        data: JSON.stringify(obj),
+    		        contentType: 'application/json',
+    		        async: true,
+    		        success: function (data) {
+    		        	$('.loading-spinner').css("display","none");
+    		        	 if(data!=null && data.length>0){
+    		        		 for(var x=0;x<data.length;x++){
+    		        			 const score=data[x].split(" ");
+    		        			 refScoreAllResult=parseFloat(refScoreAllResult)+parseFloat(score[0]);
+    		        		 }
+    		        		 refScoreAllResult=parseFloat(refScoreAllResult)/data.length;
+    		        		 $('#refAllScoreAv').val(refScoreAllResult);
+    		        		 refScoreAllResult=0;
+    		        	 }   		        
+    		        },
+    		 		error: function(data){
+    		 			$('.loading-spinner').css("display","none");
+    		 			Swal.fire({
+   						  title:'HATA',
+   					//    text:'Puanlama Sonlandırılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						})
+    		 		}
+    	 	});
+    	 }
+    	 
+    	 function sendAjaxChangeStatusEva(obj){
+    		 $.ajax({
+    		        url: "/changeStatusEvaByOKB",
+    		        type: 'POST',
+    		        data: JSON.stringify(obj),
+    		        contentType: 'application/json',
+    		        async: true,
+    		        success: function (data) {
+    		        	$('.loading-spinner').css("display","none");
+    		        	$('#exampleModalMessage').modal('hide');
+    		        	if(data){
+    		        		Swal.fire({
+  	   						  title:'Success',
+  	   						  text:'Puanlama Başarıyla Sonlandırıldı',
+  	   						  icon:'success',
+  	   						  confirmButtonColor: "#696cff" 
+  	   						})
+    		        	}else{
+    		        		Swal.fire({
+    	   						  title:'HATA',
+    	   						  text:'Puanlama Sonlandırılamadı',
+    	   						  icon:'error',
+    	   						  confirmButtonColor: "#696cff" 
+    	   						})
+    		        	}
+    		        	getEvaluationTable();
     		        },
     		 		error: function(data){
     		 			$('.loading-spinner').css("display","none");
@@ -369,7 +519,7 @@
     		 		}
     	 	});
     	 }
-    	 
+    	 var table = $("#refScoredTable").dataTable();
     	 function getRefListByEvaluation(obj){
     		 $.ajax({
     		        url: "/getRefListByEvaluation",
@@ -378,10 +528,11 @@
     		        contentType: 'application/json',
     		        async: true,
     		        success: function (data) {	
-    		        	var evaCount=data.length;
+		 				table.fnClearTable( 0 );
+		 				table.fnDraw();
     		        	$('.loading-spinner').css("display","none");
     		        	$('#OKBFinish').css("display",""); 
-    		        	 var table = $("#refScoredTable").dataTable({
+    		        	 table = $("#refScoredTable").dataTable({
     		        		 paging:false,
     		        		 searching:false,
     		        		 destroy: !0,
@@ -404,8 +555,9 @@
     		                      { data: "score",
     		                    	  render: function ( data, type, row ) {
     		                    		  try{
-    		                    			  if(data!=null)
+    		                    			  if(data!=null){
         		                    			return data;
+    		                    			  }
     		                    			  else{return "X";}
         		                    	  } catch(err){ return "x";}
     		                     		 }
@@ -458,6 +610,7 @@
      						})
    						$('#exampleModalMessage').modal('hide');
     		        	$('.js-example-basic-multiple').val(null).trigger('change');
+    		        	getEvaluationTable();
     		        },
     		 		error: function(data){
     		 			$('.loading-spinner').css("display","none");
@@ -536,6 +689,13 @@
                   destroy: !0,
                   data: data,           
                   columns: [
+                	  {data: null,
+                    	  render: function ( data, type, row ) {
+                  		  	  if(data.user!=null){
+                  		  		  return data.user.firstName+" "+data.user.lastName;
+                  		  	  }
+                    	  }
+                      },
                       { data: "title" },
                       { data: "uniName" },
                       { data: null,
@@ -555,7 +715,6 @@
                   		
                     	  }  
                       },
-                      { data: "filePath" },
                       { data: "description"},
                       { data: null,
                     	  render: function ( data, type, row ) {
@@ -573,12 +732,14 @@
                       },
                       { data: null,
                     	  render: function ( data, type, row ) {
-                    		if(data.point==0){
-                    			return null;
-                    		}
-                    		else{
-                    			return data.point;
-                    		}
+                    		  switch(data.point){
+                  		  	case 0 : return null;
+							    break;
+                  		  	case 1 : return '<strong>REDDEDİLDİ</strong>';
+								break;
+                  		  	case 2 : return '<strong>KABUL EDİLDİ</strong>';
+								break;
+                  		 	 }
                     	  }    
                       },
                       {
@@ -595,9 +756,9 @@
 							    break;
                     		  	case 1 : return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Listesi</button>';
 								break;
-                    		  	case 2 : return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Listesi</button>';
+                    		  	case 2 : return '<button id="btnOKBFinishModel" type="button" class="btn btn-warning  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#OKBFinishModel">Başvuruyu Sonuçlandır</button>';
 								break;
-                    		  	case 3 : return '<button id="btnRefList" type="button" class="btn btn-success  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Sonuç</button>';
+                    		  	case 3 : return '';
 								break;
                     		  }
                     	  }

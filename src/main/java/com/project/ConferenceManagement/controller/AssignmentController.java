@@ -54,4 +54,8 @@ public class AssignmentController {
 	public RefereeScoreModel getRefScoreResult(@RequestBody RefereeScoreModel refScoreModel) {
 		return assignmentService.getRefScoreResult(refScoreModel);
 	}
+	@PostMapping("/getRefAllScore")
+	public List<String> getRefAllScore(@RequestBody RefereeScoreModel refScoreModel) {
+		return assignmentService.getRefAllScore(refScoreModel.getEvaluation_id());
+	}
 }

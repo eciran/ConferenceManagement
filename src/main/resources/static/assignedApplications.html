@@ -67,15 +67,7 @@
             <span class="nav-link-text ms-1">Anasayfa</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="../profile.html">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Profil</span>
-          </a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item OKBNotSee" >
           <a class="nav-link " href="../toApply.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-book-bookmark text-success text-sm opacity-10"></i>
@@ -83,7 +75,7 @@
             <span class="nav-link-text ms-1">Başvuru</span>
           </a>
         </li>
-         <li class="nav-item">
+         <li class="nav-item OKBNotSee">
           <a class="nav-link " href="../pendingApplications.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-books text-primary text-sm opacity-10"></i>
@@ -91,7 +83,7 @@
             <span class="nav-link-text ms-1">Yapılan Başvurular</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item REFSee" hidden="true">
           <a class="nav-link " href="../assignedApplications.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -99,7 +91,7 @@
             <span class="nav-link-text ms-1">Değerlendirme Listesi</span>
           </a>
         </li>
-          <li class="nav-item">
+         <li class="nav-item OKBSee">
           <a class="nav-link " href="../evaluationList.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-key-25 text-dark text-sm opacity-10"></i>
@@ -390,7 +382,7 @@
                       			return '<button id="btnSeeScoring" type="button" class="btn btn-dark btn-sm form-control" data-bs-toggle="modal" data-bs-target="#exampleModalScoring">Değerlendirmeyi Gör</button>';
                       		}
                       		else{
-                      			return '<button id="btnScoring" type="button" class="btn btn-dark btn-sm form-control"  btn-sm form-control" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">Puanlama Yap</button>';
+                      			return '<button id="btnScoring" type="button" class="btn bg-gradient-info btn-sm form-control"  btn-sm form-control" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">Puanlama Yap</button>';
                       		}  
                       	  }
                       	}                 

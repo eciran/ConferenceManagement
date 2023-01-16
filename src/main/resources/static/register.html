@@ -61,6 +61,13 @@
                 <div class="mb-3">
                   <input type="password" class="form-control" id="register_repassword" name="register_repassword" placeholder="Şifre Tekrar" required="required">
                 </div>
+                <div class="mb-3">
+                  <select class="form-control required" id="user_role" required>
+                    	<option selected="selected" disabled="disabled">Choose Role...</option>
+						<option value="AUTHOR">YAZAR</option>
+						<option value="REFEREE">HAKEM</option>
+					</select>
+                </div>
                 <div class="text-center">
                 <label id = "result" style="font-size:small;float: left"></label>  
                   <button type="button" id="register_btn" class="btn bg-gradient-dark w-100 my-4 mb-2">Kayıt Ol</button>
@@ -91,6 +98,10 @@
   <!--   Core JS Files   -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" src="../global/js/register.js"></script>
+  <script src="../global/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../global/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../global/js/plugins/chartjs.min.js"></script>
+  <script src="../global/js/sweetalert2.js"></script>
   <script src="../global/js/jwtDecode.js"></script>
   <script src="../global/js/core/popper.min.js"></script>
   <script src="../global/js/core/bootstrap.min.js"></script>

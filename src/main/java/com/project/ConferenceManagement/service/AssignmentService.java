@@ -21,4 +21,6 @@ public interface AssignmentService {
 	public String setAssignmentScoreByRef(RefereeScoreModel refScoreModel);
 
 	public RefereeScoreModel getRefScoreResult(RefereeScoreModel refScoreModel);
+
+	public List<String> getRefAllScore(Long evaluation_id);
 }

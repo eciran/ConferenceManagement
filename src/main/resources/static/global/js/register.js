@@ -2,11 +2,16 @@
   		
   	  $("#register_btn").click(function() {  
 		if($("#firstName").val()!="" && $("#lastName").val()!="" &&  $("#email").val()!=""
-			&& $("#register_password").val()!=""){
+			&& $("#register_password").val()!="" && $("#user_role").val()!=null){
 	     		register_password();
 	     }
 	     else{
-		alert("Lütfen Gerekli Bilgileri Giriniz");
+			Swal.fire({
+			  title:'HATA',
+		      text:'Tüm Bilgilerin Girildiğinden Emin olunuz',
+			  icon:'error',
+			  confirmButtonColor: "#696cff" 
+			})
 	}
       });
       
@@ -18,6 +23,7 @@
 		search["role"] = $("#register_role").val();
   		search["email"] = $("#email").val();
   		search["password"] = $("#register_password").val();
+  		search["role"] = $("#user_role").val();
   		sendAjax(search);
   	}
   	 $("#txtPassword").click(function () {

@@ -3,6 +3,7 @@ package com.project.ConferenceManagement.service.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,17 @@ import com.project.ConferenceManagement.entity.UserEntity;
 import com.project.ConferenceManagement.model.EvaluationModel;
 import com.project.ConferenceManagement.repository.EvaluationRepository;
 import com.project.ConferenceManagement.service.EvaluationService;
+import com.project.ConferenceManagement.service.MailService;
+import com.project.ConferenceManagement.service.MailServiceSendblueApi;
 
 @Service
 public class EvaluationServiceImpl implements EvaluationService{
 	
 	@Autowired
 	EvaluationRepository evaluationRepository;
+	
+	@Autowired
+	MailService mailService;
 	@Override
 	public String toApply(EvaluationModel evaluationModel) {
 		try {
@@ -94,5 +100,37 @@ public class EvaluationServiceImpl implements EvaluationService{
 		return allList;
 	}
 
+	@Override
+	public Boolean changeStatusEvaByOKB(Long id) {
+		try {
+			Optional<EvaluationEntity> evaEntity=evaluationRepository.findById(id);
+			if(!evaEntity.isEmpty()) {
+				evaEntity.get().setStatus(2);
+				evaluationRepository.save(evaEntity.get());
+			}
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+	}
 
+	@Override
+	public Boolean setEvulationFinishByOKB(EvaluationModel evaluationModel) {
+		try {
+			Optional<EvaluationEntity> evaEntity=evaluationRepository.findById(evaluationModel.getId());
+			try {
+				mailService.sendEmailForApplicationResult(evaEntity.get().getUser().getEmail(),"ConferenceManagement");
+				if(!evaEntity.isEmpty()) {
+					evaEntity.get().setStatus(3);
+					evaEntity.get().setPoint(evaluationModel.getPoint());
+					evaluationRepository.save(evaEntity.get());
+				}
+			} catch (NullPointerException e) {
+				return null;
+			}
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+	}
 }

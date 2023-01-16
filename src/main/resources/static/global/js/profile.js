@@ -49,7 +49,7 @@ $(document).ready(function(){
 		 var key=$("#evaluation_key").val();
 		 var upfiles=$("#btnUpload").text();
 		 var desc=$("#evaluation_description").val();
-		 if(!(title!=""||uni!=""||key!=""||upfiles!="Dosya Yükleme"||desc!="")){
+		 if((title!=""&&uni!=""&&key!=""&&upfiles!="Dosya Yükleme"&&desc!="")){
 				var toApply={}
 					toApply["email"]=$user;
 					toApply["title"]=title;
@@ -57,6 +57,7 @@ $(document).ready(function(){
 					toApply["key"]=key;
 					toApply["filePath"]=upfiles;
 					toApply["description"]=desc;
+					$('.loading-spinner').css("display","");
 					sendAjaxToApply(toApply);
 			}
 			else{
@@ -102,11 +103,27 @@ function getUserInfo(){
 	        cache: false,
 	        timeout: 600000,	      
 	        success: function (data) {
-				$("#result1").css("display", "none");
-				successAlert("Başvuru");
+				if(data=="Success"){
+					$('.loading-spinner').css("display","");
+					$("#result1").css("display", "none");
+					successAlert("Başvuru");
+					window.location.replace("../pendingApplications.html");
+				}else{
+					Swal.fire({
+   						  title:'HATA',
+   					      text:'Başvuru Yapılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						});
+				}
 	        },
-	        error: function (e) {
-              
+	        error: function () {
+              	Swal.fire({
+   						  title:'HATA',
+   					      text:'Başvuru Yapılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						});
             }
 	    });
 	}
@@ -171,7 +188,14 @@ function getUserInfo(){
     			        timer: 1500,
     			        showConfirmButton: !1,
     			    });
+			    $('#exampleModalMessage').modal('hide');
+			       	 if($user!=null){
+			    		 var op={};
+						 op["email"]=$user;
+						 getAssignmentTable(op);
+			    	 }
 				}
+				
 	        },
 	        error: function () {
 			  $('.loading-spinner').css("display","none");

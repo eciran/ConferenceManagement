@@ -15,5 +15,9 @@ public interface UserKeyRepository extends JpaRepository<KeyEntity, Long>{
 
 	@Query(nativeQuery = true, value="select * from user_key_match where match_key=:key ")
 	List<KeyEntity> findAllKeyByRef(@Param("key") String key);
+	
+	@Query(nativeQuery = true, value="select count(*) from user_key_match where user_id=:user_id ")
+	int findKeyCountByRef(@Param("user_id") Long user_id);
+
 
 }

@@ -1,5 +1,6 @@
 package com.project.ConferenceManagement.controller;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.ConferenceManagement.entity.UserEntity;
 import com.project.ConferenceManagement.model.PasswordModel;
 import com.project.ConferenceManagement.model.UserKeyModel;
+import com.project.ConferenceManagement.model.UserModel;
 import com.project.ConferenceManagement.model.UserResponse;
 import com.project.ConferenceManagement.repository.UserRepository;
 import com.project.ConferenceManagement.service.UserService;
@@ -93,12 +95,29 @@ public class UserRestController {
 	}
 	@RequestMapping(value = "/setUserRoleAndKey")
 	public String setUserRoleAndKey(@RequestBody UserKeyModel userKey) {
-		if(userKey.getKeyList().length>0 && userKey.getRole()!=null) {
+		if(userKey.getKeyList().length>0) {
 			return userService.setUserRoleAndKey(userKey);
 		}
 		else {
 			return null;
 		}
+	}
+	@RequestMapping(value = "/getRefereInterestListCount")
+	public Boolean getRefereInterestListCount(@RequestBody UserKeyModel userKey) {
+		if(userKey.getUserEmail()!=null) {
+			return userService.getRefereInterestListCount(userKey.getUserEmail());
+		}
+		else {
+			return null;
+		}
+	}
+	@RequestMapping(value = "/getRefListForOKB")
+	public List<UserModel> getRefAndAuthorList() {
+		return userService.getRefList();
+	}
+	@RequestMapping(value = "/getAuthorList")
+	public List<UserModel> getAuthorList() {
+		return userService.getAuthorList();
 	}
 		
 }

@@ -70,18 +70,11 @@
                 <span class="d-sm-inline d-none" id="userOnline"></span>
               </a>
             </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                </div>
-              </a>
-            </li>
+
+           
              <li class="nav-item px-3 d-flex align-items-center">
               <a href="" class="nav-link text-white font-weight-bold px-0">
-                <i class="fa fa-sign-out me-sm-1"></i>
+                <i class="fa fa-sign-out me-sm-1" id="userLogout"></i>
               </a>
             </li>
           </ul>
@@ -91,7 +84,7 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <div class="card">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
@@ -102,17 +95,7 @@
               <hr class="horizontal dark">
               
               <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-            	     <label for="exampleFormControlTextarea">Üyelik Rolü</label></br>
-					<select class="form-control" id="register_role" required>
-						  <option value="0" selected="selected" disabled="disabled">Choose Role</option>
-						  <option value="1">Yazar</option>
-						  <option value="2">Hakem</option>
-					</select>
-                  </div>
-                </div>
-                 <div class="col-md-6">
+                 <div class="col-md-12">
                   <div class="form-group">
             	     <label for="exampleFormControlTextarea">İlgi Alanları</label></br>
 					<select class="js-example-basic-multiple form-control" id="interestList" name="states[]" multiple="multiple" style="width: 100%" >
@@ -184,13 +167,10 @@
     }
     $(document).ready(function(){
     	
-    	if($role==null){
-   	    	$('.js-example-basic-multiple').select2({
-      	     	 width: 'resolve',
-      	     	 placeholder: "Lütfen Seçim Yapınız",
-      	     	 maximumSelectionLength: 3
-      	     });   	    
-   	    	$('.loading-spinner').css("display","none");
+    	if($role=="REFEREE"){
+    		var obj={};
+			obj["userEmail"]=$user;
+			getRefereInterestListCount(obj);
     	}else{
     		window.location.replace("../dashboard.html");
     	}
@@ -198,7 +178,7 @@
     });
     	 $("#btnInterestList").click(function(){
     		 var selected = $('#interestList').select2("data");
-    		 if(selected.length<1 || $('#register_role').val()==null){
+    		 if(selected.length<1){
     			 Swal.fire({
 					  title:'Uyarı',
 					  text:'En az 1 ilgi alanı ve üyelik rolü seçilmelidir',
@@ -213,7 +193,6 @@
 				var obj={};
 				obj["userEmail"]=$user;
 				obj["keyList"]=keyList;
-				obj["role"]=$('#register_role').val();
 				$('.loading-spinner').css("display","");
 				sendAjaxUserRoleAndKey(obj);
 			}
@@ -260,11 +239,43 @@
     		 		}
     	 	});
     	 }
+    	 function getRefereInterestListCount(obj){
+    		 $.ajax({
+    		        url: "/getRefereInterestListCount",
+    		        type: 'POST',
+    		        data: JSON.stringify(obj),
+    		        contentType: 'application/json',
+    		        async: true,
+    		        success: function (data) {
+    		        	if(data){
+						 	window.location.replace("/dashboard.html");
+    					 } 							  
+    		        	else{
+    		        		$('.js-example-basic-multiple').select2({
+    		         	     	 width: 'resolve',
+    		         	     	 placeholder: "Lütfen Seçim Yapınız",
+    		         	     	 maximumSelectionLength: 3
+    		         	     });   	    
+    		      	    	$('.loading-spinner').css("display","none");
+    		        	}
+    		        },
+    		 		error: function(data){
+    		 			$('.loading-spinner').css("display","none");
+    		 			Swal.fire({
+   						  title:'HATA',
+   						  text:'İşlem gerçekleştirilirken bir hata ile karşılaşıldı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						})
+    		 		}
+    	 	});
+    	 }
 
   </script>
   <!-- Github buttons -->
   <script src="https://buttons.github.io/buttons.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script src="../global/js/profile.js"></script>	
   <script src="../global/js/jwtDecode.js"></script>
   <script src="../global/js/jwtAuthenticate.js"></script>
   <script type="text/javascript" charset=utf-8 src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

@@ -1,6 +1,5 @@
 package com.project.ConferenceManagement.service.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +24,7 @@ import com.project.ConferenceManagement.repository.RefScoreRepository;
 import com.project.ConferenceManagement.repository.UserKeyRepository;
 import com.project.ConferenceManagement.repository.UserRepository;
 import com.project.ConferenceManagement.service.AssignmentService;
+import com.project.ConferenceManagement.service.MailService;
 
 @Service
 public class AssignmentServiceImpl implements AssignmentService {
@@ -44,6 +44,8 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Autowired 
 	RefScoreRepository refScoreRepository;
 	
+	@Autowired
+	MailService mailService;
 	@Override
 	public List<RefResponseModel> getRefList(EvaluationModel evaluationModel) {
 		List<RefResponseModel> refList=new ArrayList<>();
@@ -84,6 +86,11 @@ public class AssignmentServiceImpl implements AssignmentService {
 					assEntity.setStatus(false);
 					assignmentRepository.save(assEntity);
 				}
+				try {
+					String mailResult=mailService.sendEmailForApplicationResult(user.get().getEmail(),"ConferenceManagementRef");	
+				} catch (NullPointerException e) {
+					System.out.println("Mail Gönderilemedi");
+				}
 			}
 			evaluationEntity.get().setStatus(1);
 			evaluationRepository.save(evaluationEntity.get());
@@ -100,7 +107,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 		List<AssignmentEntity> assEntity= null;
 		List<RefereeScoreModel> refList=new ArrayList<>();
 		try {
-			assEntity= assignmentRepository.findAllEvaluationForScoring(id);
+			assEntity= assignmentRepository.findAllRefForEvaluation(id);
 			for (AssignmentEntity assignmentEntity : assEntity) {
 				RefereeScoreEntity refScore = refScoreRepository.findByAssignmentId(assignmentEntity.getId());
 				RefereeScoreModel ref=new RefereeScoreModel();
@@ -194,7 +201,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Override
 	public RefereeScoreModel getRefScoreResult(RefereeScoreModel refScoreModel) {
 		try {
-			RefereeScoreModel refModel=new RefereeScoreModel();
 			UserEntity user= userRepository.findByEmail(refScoreModel.getUser_email());
 			Optional<EvaluationEntity> eva=evaluationRepository.findById(refScoreModel.getEvaluation_id());
 			if(user!=null && !eva.isEmpty()) {
@@ -215,5 +221,22 @@ public class AssignmentServiceImpl implements AssignmentService {
 			return null;
 		}
 		return refScoreModel;
+	}
+
+	@Override
+	public List<String> getRefAllScore(Long evaluation_id) {
+		List<String> retList=new ArrayList<>();
+		try {
+			List<AssignmentEntity> getScore=assignmentRepository.findByRefScore(evaluation_id);
+			for (AssignmentEntity ass : getScore) {
+				RefereeScoreEntity refScore=refScoreRepository.findByAssignmentId(ass.getId());
+				if(refScore!=null) {
+					retList.add(refScore.getScore());
+				}
+			}
+		} catch (Exception e) {
+			return null;
+		}
+		return retList;
 	}
 }

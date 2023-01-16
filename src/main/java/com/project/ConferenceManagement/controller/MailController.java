@@ -59,16 +59,4 @@ public class MailController {
 
 	}
 	
-	@PostMapping("/contactMail")
-	public String sendEmailByContactHtml(@RequestBody MailModel mailModel, HttpServletRequest request) {
-		String response="";
-			try {
-				response=mailService.sendEmailByContactHtml(mailModel.getMailSubject(), mailModel.getMailTo(),mailModel.getMailContent());
-			}
-			catch (Exception e) {
-				response="Failed";
-				e.printStackTrace();
-			}
-		return response;
-	}
 }

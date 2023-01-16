@@ -7,6 +7,6 @@ public interface MailService {
 	public void sendEmail(MailModel mail);
 	
 	public String sendEmailForResetPassword(String url, String email);
-	
-	public String sendEmailByContactHtml(String subject, String email, String messageText);
+
+	String sendEmailForApplicationResult(String email,String template);
 }

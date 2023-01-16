@@ -67,15 +67,7 @@
             <span class="nav-link-text ms-1">Anasayfa</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="../profile.html">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Profil</span>
-          </a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item OKBNotSee" >
           <a class="nav-link " href="../toApply.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-book-bookmark text-success text-sm opacity-10"></i>
@@ -83,7 +75,7 @@
             <span class="nav-link-text ms-1">Başvuru</span>
           </a>
         </li>
-         <li class="nav-item">
+         <li class="nav-item OKBNotSee">
           <a class="nav-link " href="../pendingApplications.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-books text-primary text-sm opacity-10"></i>
@@ -91,7 +83,7 @@
             <span class="nav-link-text ms-1">Yapılan Başvurular</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item REFSee" hidden="true">
           <a class="nav-link " href="../assignedApplications.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-info text-sm opacity-10"></i>
@@ -99,7 +91,7 @@
             <span class="nav-link-text ms-1">Değerlendirme Listesi</span>
           </a>
         </li>
-         <li class="nav-item">
+         <li class="nav-item OKBSee">
           <a class="nav-link " href="../evaluationList.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-key-25 text-dark text-sm opacity-10"></i>
@@ -172,8 +164,9 @@
 	                     <th>Dosya Adı</th>
 	                     <th>Açıklama</th>
 	                     <th>Başvuru Durumu</th>
-	                     <th>Puan</th>
+	                     <th>Sonuç</th>
 	                     <th>#</th>
+	                     <th>Hakem Değerlendirmesi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -208,6 +201,38 @@
       </footer>
     </div>
   </main>
+   <div class="modal fade" id="refListModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Hakem Listesi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+			 <div class="table-responsive text-nowrap">
+                  <table class="table card-table" id="refScoredTable">
+                    <thead>
+                      <tr class="text-nowrap">
+	                 	 <th>Hakem</th>
+	                     <th>Açıklama</th>
+	                     <th>Puan</th>
+	                     <th>Hakem Raporu</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     
+                    </tbody>
+                  </table>
+                </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
     <!--   Core JS Files   -->
    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="../global/js/core/popper.min.js"></script>
@@ -233,6 +258,7 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
     $(document).ready(function(){
+    	var table_data;
     	 var table = $('#myTable').dataTable();
     	 if($user!=null){
     		 var op={};
@@ -274,6 +300,81 @@
  				}
  		     });
     	 }
+     	   $('#myTable tbody').on( 'click', '#btnRefList', function (){	
+      			$('.loading-spinner').css("display","");
+      			var obj={};
+   			obj["evaluationId"]=table_data.id;
+     	    	getRefListByEvaluation(obj);
+     	     });
+     	  function getRefListByEvaluation(obj){
+     		 $.ajax({
+     		        url: "/getRefListByEvaluation",
+     		        type: 'POST',
+     		        data: JSON.stringify(obj),
+     		        contentType: 'application/json',
+     		        async: true,
+     		        success: function (data) {	
+     		        	$('.loading-spinner').css("display","none");
+     		        	$('#OKBFinish').css("display",""); 
+     		        	 var table = $("#refScoredTable").dataTable({
+     		        		 paging:false,
+     		        		 searching:false,
+     		        		 destroy: !0,
+     		                  data: data,           
+     		                  columns: [
+     		                      { data: "refName" },
+     		                      { data: "description",
+     		                    	  render: function ( data, type, row ) {
+ 	    		                    	  try{
+ 	    		                    		  if(data!=null)
+ 	    		                    			return data;	
+ 	    		                    		  else{
+ 	    		                    			  $('#OKBFinish').css("display","none"); 
+ 	    		                    			  return "X";}
+ 	    		                    	  }catch(err){ 
+ 	    		                    		  $('#OKBFinish').css("display","none"); 
+ 	    		                    		  return "x";}
+     		                    	}
+     		                      },
+     		                      { data: "score",
+     		                    	  render: function ( data, type, row ) {
+     		                    		  try{
+     		                    			  if(data!=null){
+         		                    			return data;
+     		                    			  }
+     		                    			  else{return "X";}
+         		                    	  } catch(err){ return "x";}
+     		                     		 }
+     		                      },		
+     		                      { data: "scoreFilePath",
+     		                    	  render: function ( data, type, row ) {
+ 	   		                    		  try{
+ 	   		                    			 if(data!=null){
+ 	   		                    				 return '<a href="../upfiles/ref/'+data+'" target="_blank" type="button" class="btn btn-primary  btn-sm form-control">PDF Görüntüle</button>';
+ 	   		                    			 }else{return '<a type="button" class="btn btn-danger  btn-sm form-control">PDF Henüz Yüklenmemiş</button>';}
+ 	   		                    		  }catch(err){ return "x";}
+      		                    	 }  
+     		                      }
+     		                                                          
+     		                  ],
+     		                  columnDefs: [{ targets: "_all", defaultContent: "", }],
+     		                  
+     		              });
+     		              table.$('tr').click( function () {
+     				    	    table_data = table.fnGetData(this);
+     						});
+     		        },
+     		 		error: function(data){
+     		 			$('.loading-spinner').css("display","none");
+     		 			Swal.fire({
+    						  title:'HATA',
+    						  text:'Hakem Listesi alınamadı',
+    						  icon:'error',
+    						  confirmButtonColor: "#696cff" 
+    						})
+     		 		}
+     	 	});
+     	 }
     	  function tableListAdd(data){
               var table = $("#myTable").dataTable({
                   destroy: !0,
@@ -307,7 +408,7 @@
 										 break;
                     		  	case 1 : return 'Değerlendirme Aşamasında';
 										 break;
-                    		  	case 2 : return 'Puanlama Tamamlandı';
+                    		  	case 2 : return 'Nihai Karar Bekleniyor';
 										 break;
                     		  	case 3 : return 'Başvuru Sonuçlandı';
 								 		 break;
@@ -316,12 +417,14 @@
                       },
                       { data: null,
                     	  render: function ( data, type, row ) {
-                    		if(data.point==0){
-                    			return null;
-                    		}
-                    		else{
-                    			return data.point;
-                    		}
+                    		  switch(data.point){
+                  		  	case 0 : return null;
+							    break;
+                  		  	case 1 : return '<strong>REDDEDİLDİ</strong>';
+								break;
+                  		  	case 2 : return '<strong>KABUL EDİLDİ</strong>';
+								break;
+                  		 	 }
                     	  }    
                       },
                       {
@@ -329,11 +432,24 @@
                     	  render: function ( data, type, row ) {
                     	    return '<a href="../upfiles/author/'+data.filePath+'" target="_blank" id="btnPdf" type="button" class="btn btn-primary btn-sm form-control">PDF Görüntüle</button>';
                     	  }
-                    	}
+                      },
+                      {
+                    	  data: null,
+                    	  render: function ( data, type, row ) {
+                    		if(data.status==3){             
+                    			return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Değerlendirmesi</button>';
+                    		}else{
+                    			return '<a href="#" type="button" class="btn btn-danger btn-sm form-control">Değerlendirme Aşamasında</button>';
+                    		}
+                    	  }
+                      },
                                      
                   ],
                   columnDefs: [{ targets: "_all", defaultContent: "", }],
               });
+              table.$('tr').click( function () {
+		    	    table_data = table.fnGetData(this);
+				});
            }
     });
   </script>

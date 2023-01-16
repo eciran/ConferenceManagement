@@ -78,6 +78,15 @@ public class EvaluationController {
 	 public List<EvaluationModel> getEvaluationTableForRef(){
 		return evaluationServiceImpl.getEvaluationTableForAll();
 	 }	 
+	 @PostMapping("/changeStatusEvaByOKB")
+	 public Boolean changeStatusEvaByOKB(@RequestBody EvaluationModel evaluationModel){
+		return evaluationServiceImpl.changeStatusEvaByOKB(evaluationModel.getId());
+	 }	 
+	 
+	 @PostMapping("/setEvulationFinishByOKB")
+	 public Boolean setEvulationFinishByOKB(@RequestBody EvaluationModel evaluationModel){
+		return evaluationServiceImpl.setEvulationFinishByOKB(evaluationModel);
+	 }	 
 	 
 }
 	  
