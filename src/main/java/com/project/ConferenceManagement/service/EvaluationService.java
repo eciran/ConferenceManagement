@@ -13,4 +13,8 @@ public interface EvaluationService {
 
 	public List<EvaluationModel> getEvaluationTableForAll();
 
+	public Boolean changeStatusEvaByOKB(Long id);
+
+	public Boolean setEvulationFinishByOKB(EvaluationModel evaluationModel);
+
 }

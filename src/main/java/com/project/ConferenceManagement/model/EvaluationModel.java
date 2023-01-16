@@ -24,6 +24,8 @@ public class EvaluationModel {
 	
 	private int status;
 	
+	private boolean refScoreStat;
+	
 	public Long getId() {
 		return id;
 	}
@@ -83,6 +85,12 @@ public class EvaluationModel {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public boolean isRefScoreStat() {
+		return refScoreStat;
+	}
+	public void setRefScoreStat(boolean refScoreStat) {
+		this.refScoreStat = refScoreStat;
 	}
 	
 	

@@ -13,8 +13,10 @@ public class UserModel {
 	private String lastName;
 	private String email;
 	private String password;
-	private String phoneNumber;
+	private String role;
 	private String matchingPassword;
+	private int refCount;
+	private int authorCount;
 	
 	public String getFirstName() {
 		return firstName;
@@ -46,11 +48,23 @@ public class UserModel {
 	public void setMatchingPassword(String matchingPassword) {
 		this.matchingPassword = matchingPassword;
 	}
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getRole() {
+		return role;
 	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setRole(String phoneNumber) {
+		this.role = phoneNumber;
+	}
+	public int getRefCount() {
+		return refCount;
+	}
+	public void setRefCount(int refCount) {
+		this.refCount = refCount;
+	}
+	public int getAuthorCount() {
+		return authorCount;
+	}
+	public void setAuthorCount(int authorCount) {
+		this.authorCount = authorCount;
 	}
 	
 	

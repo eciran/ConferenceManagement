@@ -46,7 +46,7 @@
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+ <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"  id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0">
@@ -65,36 +65,36 @@
             <span class="nav-link-text ms-1">Anasayfa</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="../pages/tables.html">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Profil</span>
-          </a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item OKBNotSee" >
           <a class="nav-link " href="../toApply.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+              <i class="ni ni-book-bookmark text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Başvuru</span>
           </a>
         </li>
-         <li class="nav-item">
+         <li class="nav-item OKBNotSee">
           <a class="nav-link " href="../pendingApplications.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+              <i class="ni ni-books text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Yapılan Başvurular</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="../pages/virtual-reality.html">
+        <li class="nav-item REFSee" hidden="true">
+          <a class="nav-link " href="../assignedApplications.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-app text-info text-sm opacity-10"></i>
+              <i class="ni ni-collection text-info text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Değerlendirme Listesi</span>
+          </a>
+        </li>
+         <li class="nav-item OKBSee">
+          <a class="nav-link " href="../evaluationList.html">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-key-25 text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Başvuruları Yönet</span>
           </a>
         </li>
       </ul>
@@ -109,7 +109,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Panel</a></li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">Tüm Başvurular</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Durum Listesi</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Başvuruları Yönet</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -123,91 +123,11 @@
                 <span class="d-sm-inline d-none" id="userOnline"></span>
               </a>
             </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                  <i class="sidenav-toggler-line bg-white"></i>
-                </div>
-              </a>
-            </li>
-            <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
-              </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="../global/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New message</span> from Laur
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          13 minutes ago
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <img src="../global/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">New album</span> by Travis Scott
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          1 day
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                          <title>credit-card</title>
-                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                              <g transform="translate(1716.000000, 291.000000)">
-                                <g transform="translate(453.000000, 454.000000)">
-                                  <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                  <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                                </g>
-                              </g>
-                            </g>
-                          </g>
-                        </svg>
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          Payment successfully completed
-                        </h6>
-                        <p class="text-xs text-secondary mb-0">
-                          <i class="fa fa-clock me-1"></i>
-                          2 days
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-             <li class="nav-item d-flex align-items-center">
+
+           
+             <li class="nav-item px-3 d-flex align-items-center">
               <a href="" class="nav-link text-white font-weight-bold px-0">
-                <i class="fa fa-sign-out me-sm-1"></i>
+                <i class="fa fa-sign-out me-sm-1" id="userLogout"></i>
               </a>
             </li>
           </ul>
@@ -229,14 +149,14 @@
                   <table class="table card-table" id="myTable">
                     <thead>
                       <tr class="text-nowrap">
+                    	  <th>Başvuru Sahibi</th>
 	                 	 <th>Başlık</th>
 	                  	 <th>Kurum Adı</th>
-	                     <th>Anahtar Kelimeler</th>
-	                     <th>Dosya Adı</th>
+	                     <th>Başvuru Konusu</th>
 	                     <th>Açıklama</th>
 	                     <th>Başvuru Durumu</th>
 	                     <th>Puan</th>
-	                     <th>#</th>
+	                     <th>Dosya</th>
 	                     <th>Hakem</th>
                       </tr>
                     </thead>
@@ -284,7 +204,7 @@
           <div class="modal-body">
             <form>
             <div class="form-group" style="display:none">               
-                <input type="text" class="form-control" value="Creative Tim" id="recipient_id">
+                <input type="text" class="form-control" id="recipient_id">
               </div>
              <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Atama Yapılan Proje:</label>
@@ -305,7 +225,7 @@
       </div>
     </div>
     <div class="modal fade" id="refListModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Hakem Listesi</h5>
@@ -314,16 +234,65 @@
         </button>
       </div>
       <div class="modal-body">
-      <ul class="list-group" id="refListGroup" style="display: none">
-		  <li class="list-group-item"><label for="recipient-name"  id="ref1_label" class="col-form-label"></label></li>
-		  <li class="list-group-item"><label for="recipient-name"  id="ref2_label" class="col-form-label"></label></li>
-		  <li class="list-group-item"><label for="recipient-name"  id="ref3_label" class="col-form-label"></label></li>
-	  </ul>
-        
-       
-        <label for="recipient-name"  id="ref3_label" class="col-form-label"></label>
+			 <div class="table-responsive text-nowrap">
+                  <table class="table card-table" id="refScoredTable">
+                    <thead>
+                      <tr class="text-nowrap">
+	                 	 <th>Hakem</th>
+	                     <th>Açıklama</th>
+	                     <th>Puan</th>
+	                     <th>Hakem Raporu</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     
+                    </tbody>
+                  </table>
+                </div>
       </div>
       <div class="modal-footer">
+      <button type="button" class="btn bg-gradient-success" id="OKBFinish" data-bs-dismiss="modal" style="display:none">Puanlamayı Bitir</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="OKBFinishModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nihai Karar Aşaması</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	      <div class="form-group">
+			<label for="exampleFormControlTextarea">Hakem Puan Ortalaması</label>
+				<select class="form-control required" id="refAllScoreAv" disabled="disabled">
+					<option value="1">1 - Kesin Red</option>
+					<option value="2">2 - Zayıf Red</option>
+					<option value="3">3 - Nötr</option>
+					<option value="4">4 - Kabul</option>
+					<option value="5">5 - Kesin Kabul</option>
+				</select>	
+	      </div>
+	      <div class="form-group">
+			<h4 style="text-align: center">NİHAİ KARAR</h4>
+		<div class="form-check mb-3">
+		  <input class="form-check-input" type="radio" name="flexRadioDefault" id="radioKabul">
+		  <label class="custom-control-label" for="customRadio1">KABUL EDİLDİ</label>
+		</div>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" name="flexRadioDefault" id="radioRet">
+		  <label class="custom-control-label" for="customRadio2">REDDEDİLDİ</label>
+		</div>
+			
+			
+	      </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-warning" id="btnOKBFinishEvaluation" data-bs-dismiss="modal">Başvuruyu Sonuçlandır</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
@@ -357,6 +326,9 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
     $(document).ready(function(){
+    	if($role!="OKB"){
+    		window.location.replace("../dashboard.html");
+    	}
     	 var table = $('#myTable').dataTable();
    	    $('#myTable tbody').on( 'click', '#btnAddRef', function (){
    	    	$('.js-example-basic-multiple').select2({
@@ -372,7 +344,7 @@
 			$("#refList").empty();
 			 getRefList(obj);
    	     });
-   	   $('#myTable tbody').on( 'click', '#btnRefList', function (){	 
+   	   $('#myTable tbody').on( 'click', '#btnRefList', function (){	
    			$('.loading-spinner').css("display","");
    			var obj={};
 			obj["evaluationId"]=table_data.id;
@@ -403,7 +375,151 @@
 			}
     	 });
     	 
+    	 $('#OKBFinish').click(function(){
+    		 var obj={};
+   			obj["id"]=table_data.id;
+    		 $('.loading-spinner').css("display","");
+    		 sendAjaxChangeStatusEva(obj);
+   		 });
+    	 $('#btnOKBFinishEvaluation').click(function(){
+    		 var kabul = document.getElementById("radioKabul").checked;
+    		 var ret = document.getElementById("radioRet").checked;
+    		 if(kabul && ret){
+    			 Swal.fire({
+					icon:'warning',
+ 			        title: "En az bir sonuç seçilmelidir",
+ 			        position: "center",
+ 			        timer: 1000,
+ 			        showConfirmButton: !1,
+ 			    });
+    		 }else{
+    			 var obj={};
+       			 obj["id"]=table_data.id;
+       			 if(kabul){
+       				obj["point"]=2; 
+       			 }else{
+       				obj["point"]=1; 
+       			 } 
+       			$('.loading-spinner').css("display","");
+       			 sendAjaxEvulationFinishByOKB(obj);
+    		 }
+   		 });
+    	 function sendAjaxEvulationFinishByOKB(obj){
+    		 $.ajax({
+    		        url: "/setEvulationFinishByOKB",
+    		        type: 'POST',
+    		        data: JSON.stringify(obj),
+    		        contentType: 'application/json',
+    		        async: true,
+    		        success: function (data) {
+    		        	$('.loading-spinner').css("display","none");
+    		        	$('#OKBFinishModel').modal('hide');
+  		        		if(data){
+  		        			Swal.fire({
+  	   						  title:'Tebrikler',
+  	   					      text:'Başvuru Başarıyla Tamamlandı',
+  	   						  icon:'success',
+  	   						  confirmButtonColor: "#696cff" 
+  	   						})
+  		        		}else{
+  		        			Swal.fire({
+  	   						  title:'HATA',
+  	   					      text:'Başvuru Sonlandırılamadı',
+  	   						  icon:'error',
+  	   						  confirmButtonColor: "#696cff" 
+  	   						})
+  		        		}
+  		        		getEvaluationTable();
+    		        },
+    		 		error: function(data){
+    		 			$('.loading-spinner').css("display","none");
+    		 			Swal.fire({
+   						  title:'HATA',
+   					      text:'Başvuru Sonlandırılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						})
+    		 		}
+    	 	});
+    	 }
     	 
+    	 $('#myTable tbody').on( 'click', '#btnOKBFinishModel', function (){
+    		 var obj={};
+   			 obj["evaluation_id"]=table_data.id;
+    		 $('.loading-spinner').css("display","");
+    		 getRefAllScore(obj);
+   		 });
+    	 var refScoreAllResult=0;
+    	 function getRefAllScore(obj){
+    		 $.ajax({
+    		        url: "/getRefAllScore",
+    		        type: 'POST',
+    		        data: JSON.stringify(obj),
+    		        contentType: 'application/json',
+    		        async: true,
+    		        success: function (data) {
+    		        	$('.loading-spinner').css("display","none");
+    		        	 if(data!=null && data.length>0){
+    		        		 for(var x=0;x<data.length;x++){
+    		        			 const score=data[x].split(" ");
+    		        			 refScoreAllResult=parseFloat(refScoreAllResult)+parseFloat(score[0]);
+    		        		 }
+    		        		 refScoreAllResult=parseFloat(refScoreAllResult)/data.length;
+    		        		 $('#refAllScoreAv').val(refScoreAllResult);
+    		        		 refScoreAllResult=0;
+    		        	 }   		        
+    		        },
+    		 		error: function(data){
+    		 			$('.loading-spinner').css("display","none");
+    		 			Swal.fire({
+   						  title:'HATA',
+   					//    text:'Puanlama Sonlandırılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						})
+    		 		}
+    	 	});
+    	 }
+    	 
+    	 function sendAjaxChangeStatusEva(obj){
+    		 $.ajax({
+    		        url: "/changeStatusEvaByOKB",
+    		        type: 'POST',
+    		        data: JSON.stringify(obj),
+    		        contentType: 'application/json',
+    		        async: true,
+    		        success: function (data) {
+    		        	$('.loading-spinner').css("display","none");
+    		        	$('#exampleModalMessage').modal('hide');
+    		        	if(data){
+    		        		Swal.fire({
+  	   						  title:'Success',
+  	   						  text:'Puanlama Başarıyla Sonlandırıldı',
+  	   						  icon:'success',
+  	   						  confirmButtonColor: "#696cff" 
+  	   						})
+    		        	}else{
+    		        		Swal.fire({
+    	   						  title:'HATA',
+    	   						  text:'Puanlama Sonlandırılamadı',
+    	   						  icon:'error',
+    	   						  confirmButtonColor: "#696cff" 
+    	   						})
+    		        	}
+    		        	getEvaluationTable();
+    		        },
+    		 		error: function(data){
+    		 			$('.loading-spinner').css("display","none");
+    		 			Swal.fire({
+   						  title:'HATA',
+   						  text:'Puanlama Sonlandırılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						})
+    		 		}
+    	 	});
+    	 }
+    	 var table = $("#refScoredTable").dataTable();
     	 function getRefListByEvaluation(obj){
     		 $.ajax({
     		        url: "/getRefListByEvaluation",
@@ -412,11 +528,57 @@
     		        contentType: 'application/json',
     		        async: true,
     		        success: function (data) {	
-    		        	$('.loading-spinner').css("display","none");   	
-    		        	$('#refListGroup').css("display","");  
-   						$('#ref1_label').text(data[0].refName+" "+data[0].refLastName);
-   						$('#ref2_label').text(data[1].refName+" "+data[1].refLastName);
-   						$('#ref3_label').text(data[2].refName+" "+data[2].refLastName);
+		 				table.fnClearTable( 0 );
+		 				table.fnDraw();
+    		        	$('.loading-spinner').css("display","none");
+    		        	$('#OKBFinish').css("display",""); 
+    		        	 table = $("#refScoredTable").dataTable({
+    		        		 paging:false,
+    		        		 searching:false,
+    		        		 destroy: !0,
+    		                  data: data,           
+    		                  columns: [
+    		                      { data: "refName" },
+    		                      { data: "description",
+    		                    	  render: function ( data, type, row ) {
+	    		                    	  try{
+	    		                    		  if(data!=null)
+	    		                    			return data;	
+	    		                    		  else{
+	    		                    			  $('#OKBFinish').css("display","none"); 
+	    		                    			  return "X";}
+	    		                    	  }catch(err){ 
+	    		                    		  $('#OKBFinish').css("display","none"); 
+	    		                    		  return "x";}
+    		                    	}
+    		                      },
+    		                      { data: "score",
+    		                    	  render: function ( data, type, row ) {
+    		                    		  try{
+    		                    			  if(data!=null){
+        		                    			return data;
+    		                    			  }
+    		                    			  else{return "X";}
+        		                    	  } catch(err){ return "x";}
+    		                     		 }
+    		                      },		
+    		                      { data: "scoreFilePath",
+    		                    	  render: function ( data, type, row ) {
+	   		                    		  try{
+	   		                    			 if(data!=null){
+	   		                    				 return '<a href="../upfiles/ref/'+data+'" target="_blank" type="button" class="btn btn-primary  btn-sm form-control">PDF Görüntüle</button>';
+	   		                    			 }else{return '<a type="button" class="btn btn-danger  btn-sm form-control">PDF Henüz Yüklenmemiş</button>';}
+	   		                    		  }catch(err){ return "x";}
+     		                    	 }  
+    		                      }
+    		                                                          
+    		                  ],
+    		                  columnDefs: [{ targets: "_all", defaultContent: "", }],
+    		                  
+    		              });
+    		              table.$('tr').click( function () {
+    				    	    table_data = table.fnGetData(this);
+    						});
     		        },
     		 		error: function(data){
     		 			$('.loading-spinner').css("display","none");
@@ -448,6 +610,7 @@
      						})
    						$('#exampleModalMessage').modal('hide');
     		        	$('.js-example-basic-multiple').val(null).trigger('change');
+    		        	getEvaluationTable();
     		        },
     		 		error: function(data){
     		 			$('.loading-spinner').css("display","none");
@@ -526,10 +689,32 @@
                   destroy: !0,
                   data: data,           
                   columns: [
+                	  {data: null,
+                    	  render: function ( data, type, row ) {
+                  		  	  if(data.user!=null){
+                  		  		  return data.user.firstName+" "+data.user.lastName;
+                  		  	  }
+                    	  }
+                      },
                       { data: "title" },
                       { data: "uniName" },
-                      { data: "key" },
-                      { data: "filePath" },
+                      { data: null,
+                    	  render: function ( data, type, row ) {
+                  		  	  if(data.key==1)
+                  		  		  return 'Yazılım';
+                  		  	if(data.key==2)
+                		  		  return 'Matematik';
+                  		  if(data.key==3)
+              		  		  return 'Network';
+                  		if(data.key==4)
+            		  		  return 'Devops';
+                  		if(data.key==5)
+            		  		  return 'Fizik';
+                  		if(data.key==6)
+            		  		  return 'Biyoloji';
+                  		
+                    	  }  
+                      },
                       { data: "description"},
                       { data: null,
                     	  render: function ( data, type, row ) {
@@ -547,18 +732,20 @@
                       },
                       { data: null,
                     	  render: function ( data, type, row ) {
-                    		if(data.point==0){
-                    			return null;
-                    		}
-                    		else{
-                    			return data.point;
-                    		}
+                    		  switch(data.point){
+                  		  	case 0 : return null;
+							    break;
+                  		  	case 1 : return '<strong>REDDEDİLDİ</strong>';
+								break;
+                  		  	case 2 : return '<strong>KABUL EDİLDİ</strong>';
+								break;
+                  		 	 }
                     	  }    
                       },
                       {
                     	  data: null,
                     	  render: function ( data, type, row ) {
-                    	    return '<a href="../upfiles/'+data.filePath+'" target="_blank" id="btnPdf" type="button" class="btn btn-primary  btn-sm form-control">PDF Görüntüle</button>';
+                    	    return '<a href="../upfiles/author/'+data.filePath+'" target="_blank" id="btnPdf" type="button" class="btn btn-primary  btn-sm form-control">PDF Görüntüle</button>';
                     	  }
                       },
                       {
@@ -569,9 +756,9 @@
 							    break;
                     		  	case 1 : return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Listesi</button>';
 								break;
-                    		  	case 2 : return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Listesi</button>';
+                    		  	case 2 : return '<button id="btnOKBFinishModel" type="button" class="btn btn-warning  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#OKBFinishModel">Başvuruyu Sonuçlandır</button>';
 								break;
-                    		  	case 3 : return '<button id="btnRefList" type="button" class="btn btn-dark  btn-sm form-control"data-bs-toggle="modal" data-bs-target="#refListModel">Hakem Listesi</button>';
+                    		  	case 3 : return '';
 								break;
                     		  }
                     	  }
@@ -590,6 +777,7 @@
   <!-- Github buttons -->
   <script src="https://buttons.github.io/buttons.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script src="../global/js/profile.js"></script>	
   <script src="../global/js/jwtDecode.js"></script>
   <script src="../global/js/jwtAuthenticate.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

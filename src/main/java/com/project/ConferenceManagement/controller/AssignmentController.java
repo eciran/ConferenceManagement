@@ -12,6 +12,8 @@ import com.project.ConferenceManagement.entity.AssignmentEntity;
 import com.project.ConferenceManagement.model.AssignmentModel;
 import com.project.ConferenceManagement.model.EvaluationModel;
 import com.project.ConferenceManagement.model.RefResponseModel;
+import com.project.ConferenceManagement.model.RefereeScoreModel;
+import com.project.ConferenceManagement.model.UserResponse;
 import com.project.ConferenceManagement.service.AssignmentService;
 import com.project.ConferenceManagement.service.UserService;
 
@@ -34,8 +36,26 @@ public class AssignmentController {
 		return assignmentService.setAssignmentList(assignmentModel);
 	}
 	@PostMapping("/getRefListByEvaluation")
-	public List<RefResponseModel> getRefListByEvaluation(@RequestBody AssignmentModel assignmentModel) {
-		List<RefResponseModel> list=assignmentService.getRefListForEvaluation(assignmentModel.getEvaluationId());
-		return userServiceImpl.getRefListByEvaluation(list);
+	public List<RefereeScoreModel> getRefListByEvaluation(@RequestBody AssignmentModel assignmentModel) {
+		return assignmentService.getRefListForEvaluation(assignmentModel.getEvaluationId());
+		
+	}
+	@PostMapping("/getAssignmentTable")
+	public List<EvaluationModel> getAssignmentTable(@RequestBody UserResponse userRes){
+		return assignmentService.getEvaluationForScoring(userRes);
+	}
+	
+	@PostMapping("/setAssignmentScoreByRef")
+	public String setAssignmentScoreByRef(@RequestBody RefereeScoreModel refScoreModel) {
+		return assignmentService.setAssignmentScoreByRef(refScoreModel);
+	}
+	
+	@PostMapping("/getRefScoreResult")
+	public RefereeScoreModel getRefScoreResult(@RequestBody RefereeScoreModel refScoreModel) {
+		return assignmentService.getRefScoreResult(refScoreModel);
+	}
+	@PostMapping("/getRefAllScore")
+	public List<String> getRefAllScore(@RequestBody RefereeScoreModel refScoreModel) {
+		return assignmentService.getRefAllScore(refScoreModel.getEvaluation_id());
 	}
 }

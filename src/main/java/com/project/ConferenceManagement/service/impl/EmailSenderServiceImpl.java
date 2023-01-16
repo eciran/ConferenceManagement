@@ -52,41 +52,39 @@ public class EmailSenderServiceImpl implements MailService {
 			for (int i = 0; i < mailTemplateResponse.getCount(); i++) {
 				if(mailTemplateResponse.getTemplates().get(i).getName().equals("Reset Password Template") &&
 					mailTemplateResponse.getTemplates().get(i).getHtmlContent().contains("href=\"https://signoraonline.com\" ")) {					
-					mail.setMailTo(email);
-					mail.setMailSubject(mailTemplateResponse.getTemplates().get(i).getSubject());
-					mail.setMailContent(mailTemplateResponse.getTemplates().get(i).getHtmlContent().replace("href=\"https://signoraonline.com\" ",
-							"href=\""+url+"\""));
-					try {
-						this.sendEmail(mail);
-						result="Success";
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					
-				}
-			}
-		}
-		return result;
-	}
-
-	@Override
-	public String sendEmailByContactHtml(String subject, String email, String messageText) {
-		String result="Failed";
-		GetSmtpTemplates mailTemplateResponse= mailServiceSendblueApi.getTemplatesSendblueApi();
-		MailModel mail=new MailModel();
-		if(mailTemplateResponse!=null) {
-			for (int i = 0; i < mailTemplateResponse.getCount(); i++) {
-				if(mailTemplateResponse.getTemplates().get(i).getName().equals("Contact Mail")) {					
-						mail.setMailTo(customPropertyConfig.mailFrom);
+						mail.setMailTo(email);
 						mail.setMailSubject(mailTemplateResponse.getTemplates().get(i).getSubject());
-						mail.setMailContent(mailTemplateResponse.getTemplates().get(i).getHtmlContent().replace("mailSubject",subject).replace("mailTo", email).replace("mailContent", messageText));
+						mail.setMailContent(mailTemplateResponse.getTemplates().get(i).getHtmlContent().replace("href=\"https://signoraonline.com\" ",
+								"href=\""+url+"\""));
 						try {
 							this.sendEmail(mail);
 							result="Success";
 						} catch (Exception e) {
 							e.printStackTrace();
-						}
-					
+						}					
+				}
+			}
+		}
+		return result;
+	}
+   
+   @Override
+  	public String sendEmailForApplicationResult(String email,String template) {
+		String result="Failed";
+		GetSmtpTemplates mailTemplateResponse= mailServiceSendblueApi.getTemplatesSendblueApi();
+		MailModel mail=new MailModel();
+		if(mailTemplateResponse!=null) {
+			for (int i = 0; i < mailTemplateResponse.getCount(); i++) {
+				if(mailTemplateResponse.getTemplates().get(i).getName().equals(template)) {					
+						mail.setMailTo(email);
+						mail.setMailSubject(mailTemplateResponse.getTemplates().get(i).getSubject());
+						mail.setMailContent(mailTemplateResponse.getTemplates().get(i).getHtmlContent());
+						try {
+							this.sendEmail(mail);
+							result="Success";
+						} catch (Exception e) {
+							e.printStackTrace();
+						}					
 				}
 			}
 		}

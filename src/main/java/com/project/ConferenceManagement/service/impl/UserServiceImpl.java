@@ -1,5 +1,6 @@
 package com.project.ConferenceManagement.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -98,7 +99,7 @@ public class UserServiceImpl implements UserService {
 			userEntity.setEnabled(true);
 			userEntity.setFirstName(userModel.getFirstName());
 			userEntity.setLastName(userModel.getLastName());
-//			userEntity.setRole("USER");
+			userEntity.setRole(userModel.getRole());
 			userEntity.setRegisterDate(new Date());
 			userEntity.setPassword(passwordEncoder.encode(userModel.getPassword()));			
 			userRepository.save(userEntity);
@@ -120,24 +121,11 @@ public class UserServiceImpl implements UserService {
 		return passwordEncoder.matches(oldPassword, password);
 	}
 	@Override
-	public List<RefResponseModel> getRefListByEvaluation(List<RefResponseModel> list) {
-		for (RefResponseModel refResponseModel : list) {
-			Optional<UserEntity> user = userRepository.findById(refResponseModel.getRefId());
-			if(!user.isEmpty()) {
-				refResponseModel.setRefName(user.get().getFirstName());
-				refResponseModel.setRefLastName(user.get().getLastName());
-			}
-		}	
-		return list;
-	}
-
-	@Override
 	public String setUserRoleAndKey(UserKeyModel userKey) {
 		String ret="";
 		try {
 			UserEntity user=  userRepository.findByEmail(userKey.getUserEmail());
 			if (user!=null) {
-				user.setRole(userKey.getRole());
 				for (int i = 0; i < userKey.getKeyList().length; i++) {
 					KeyEntity keyEntity= new KeyEntity();
 					keyEntity.setUser(user);
@@ -145,12 +133,67 @@ public class UserServiceImpl implements UserService {
 					userKeyRepository.save(keyEntity);
 				}
 			}
-			userRepository.save(user);
 			ret="Success";
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			ret="Failed";
 		}
 		return ret;
+	}
+
+	@Override
+	public Boolean getRefereInterestListCount(String userEmail) {
+		boolean ret=false;
+		try {
+			UserEntity user= userRepository.findByEmail(userEmail);
+			if(user!=null) {
+				int count=userKeyRepository.findKeyCountByRef(user.getId());
+				if(count>0) {
+					ret= true;
+				}else {
+					ret=false;
+				}				
+			}
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+		return ret;
+	}
+
+	@Override
+	public List<UserModel> getRefList() {
+		List<UserModel> userModelList= new ArrayList<>();
+		try {
+			List<UserEntity> userList=userRepository.getRefList();
+			if(userList!=null) {
+				for (UserEntity userEntity : userList) {
+					UserModel uModel= new UserModel();
+					uModel.setFirstName(userEntity.getFirstName());
+					uModel.setLastName(userEntity.getLastName());
+					userModelList.add(uModel);
+				}
+			}
+		} catch (IllegalArgumentException e) {
+			
+		}
+		return userModelList;
+	}
+		@Override
+		public List<UserModel> getAuthorList() {
+			List<UserModel> userModelList= new ArrayList<>();
+			try {
+				List<UserEntity> userList=userRepository.getAuthorList();
+				if(userList!=null) {
+					for (UserEntity userEntity : userList) {
+						UserModel uModel= new UserModel();
+						uModel.setFirstName(userEntity.getFirstName());
+						uModel.setLastName(userEntity.getLastName());
+						userModelList.add(uModel);
+					}
+				}
+			} catch (IllegalArgumentException e) {
+				
+			}
+			return userModelList;
 	}
 }

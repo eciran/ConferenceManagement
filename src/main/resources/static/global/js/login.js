@@ -8,7 +8,15 @@
          if(email!=null && email.length>0 && login_pass!=null && login_pass.length>0){
 			 login_submit();
 		 }
-		 else{alert("Zorunlu Alanları Doldurunuz");}
+		 else{
+			 $('#login_button').attr("disabled",false);
+			Swal.fire({
+			  title:'HATA',
+		      text:'Tüm Bilgilerin Girildiğinden Emin olunuz',
+			  icon:'error',
+			  confirmButtonColor: "#696cff" 
+			})			
+		}
                 
       });
   	
@@ -33,7 +41,7 @@
    			 		 $('#result').css("display","");
    				     $('#result').css("color","green");
                    	 $('#result').text("Success.Yönlendiriliyorsunuz...");
-                     window.location.replace("../dashboard.html");
+                     window.location.replace("../areasOfInterest.html");
 	        	}
 	        	else{
 	        			 $('#result').css("display","");
@@ -42,7 +50,7 @@
 	        		}
 	        	 $('#login_button').attr("disabled",false);
 	        },
-	        error: function (e) {
+	        error: function () {
                 $('#login_button').attr("disabled",false);
                 $('#result').css("display","");
                 $('#result').css("color","red");

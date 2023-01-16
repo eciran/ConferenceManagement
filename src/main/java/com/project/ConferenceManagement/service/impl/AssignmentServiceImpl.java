@@ -1,6 +1,5 @@
 package com.project.ConferenceManagement.service.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,15 +11,20 @@ import org.springframework.stereotype.Service;
 import com.project.ConferenceManagement.entity.AssignmentEntity;
 import com.project.ConferenceManagement.entity.EvaluationEntity;
 import com.project.ConferenceManagement.entity.KeyEntity;
+import com.project.ConferenceManagement.entity.RefereeScoreEntity;
 import com.project.ConferenceManagement.entity.UserEntity;
 import com.project.ConferenceManagement.model.AssignmentModel;
 import com.project.ConferenceManagement.model.EvaluationModel;
 import com.project.ConferenceManagement.model.RefResponseModel;
+import com.project.ConferenceManagement.model.RefereeScoreModel;
+import com.project.ConferenceManagement.model.UserResponse;
 import com.project.ConferenceManagement.repository.AssignmentRepository;
 import com.project.ConferenceManagement.repository.EvaluationRepository;
+import com.project.ConferenceManagement.repository.RefScoreRepository;
 import com.project.ConferenceManagement.repository.UserKeyRepository;
 import com.project.ConferenceManagement.repository.UserRepository;
 import com.project.ConferenceManagement.service.AssignmentService;
+import com.project.ConferenceManagement.service.MailService;
 
 @Service
 public class AssignmentServiceImpl implements AssignmentService {
@@ -36,9 +40,14 @@ public class AssignmentServiceImpl implements AssignmentService {
 	
 	@Autowired
 	UserKeyRepository keyRepository;
+	
+	@Autowired 
+	RefScoreRepository refScoreRepository;
+	
+	@Autowired
+	MailService mailService;
 	@Override
 	public List<RefResponseModel> getRefList(EvaluationModel evaluationModel) {
-		List<UserEntity> userList= new ArrayList<>();
 		List<RefResponseModel> refList=new ArrayList<>();
 		List<KeyEntity> keyList= new ArrayList<>();
 		try {
@@ -74,7 +83,13 @@ public class AssignmentServiceImpl implements AssignmentService {
 				if(!(evaluationEntity.isEmpty() && user.isEmpty()) && evaluationEntity.get().getStatus()==0){
 					assEntity.setEvaluation(evaluationEntity.get());
 					assEntity.setReferee(user.get());
+					assEntity.setStatus(false);
 					assignmentRepository.save(assEntity);
+				}
+				try {
+					String mailResult=mailService.sendEmailForApplicationResult(user.get().getEmail(),"ConferenceManagementRef");	
+				} catch (NullPointerException e) {
+					System.out.println("Mail Gönderilemedi");
 				}
 			}
 			evaluationEntity.get().setStatus(1);
@@ -88,19 +103,140 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 
 	@Override
-	public List<RefResponseModel> getRefListForEvaluation(Long id) {
-		List<AssignmentEntity> assEntity= assignmentRepository.findAllRefForEvaluation();
-		List<RefResponseModel> refList=new ArrayList<>();
+	public List<RefereeScoreModel> getRefListForEvaluation(Long id) {
+		List<AssignmentEntity> assEntity= null;
+		List<RefereeScoreModel> refList=new ArrayList<>();
 		try {
+			assEntity= assignmentRepository.findAllRefForEvaluation(id);
 			for (AssignmentEntity assignmentEntity : assEntity) {
-				RefResponseModel ref=new RefResponseModel();
-				ref.setRefId(assignmentEntity.getReferee().getId());
+				RefereeScoreEntity refScore = refScoreRepository.findByAssignmentId(assignmentEntity.getId());
+				RefereeScoreModel ref=new RefereeScoreModel();
+				if(refScore!=null) {
+					ref.setRefName(refScore.getAssignmentId().getReferee().getFirstName()+" "+refScore.getAssignmentId().getReferee().getLastName());
+					ref.setDescription(refScore.getDescription());
+					ref.setScore(refScore.getScore());
+					ref.setScoreFilePath(refScore.getScoreFilePath());
+				}
+				else {
+					Optional<UserEntity> user= userRepository.findById(assignmentEntity.getReferee().getId());
+					if(!user.isEmpty()) {
+						ref.setRefName(user.get().getFirstName()+" "+user.get().getLastName());
+					}
+				}
 				refList.add(ref);
 			}
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
+			return null;
 		}
+		 catch (IllegalArgumentException e) {
+				e.printStackTrace();
+				return null;
+			}
 		return refList;
 	}
 
+	@Override
+	public List<EvaluationModel> getEvaluationForScoring(UserResponse userRes) {
+		UserEntity user=null;
+		List<EvaluationModel> evaModel=new ArrayList<>();
+		try {
+			user= userRepository.findByEmail(userRes.getEmail());
+			if(user!=null) {
+				List<AssignmentEntity> assignmentEntity= assignmentRepository.findAllEvaluationForScoring(user.getId());
+				for (AssignmentEntity assEntity : assignmentEntity) {
+					EvaluationModel eva=new EvaluationModel();
+					eva.setId(assEntity.getEvaluation().getId());
+					eva.setFilePath(assEntity.getEvaluation().getFilePath());
+					eva.setKey(assEntity.getEvaluation().getMatchKey());
+					eva.setDescription(assEntity.getEvaluation().getDescription());
+					eva.setTitle(assEntity.getEvaluation().getTitle());
+					eva.setUniName(assEntity.getEvaluation().getUniName());
+					eva.setRefScoreStat(assEntity.isStatus());
+					evaModel.add(eva);
+				}
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			return null;
+		}catch (IllegalArgumentException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		return evaModel;
+	}
+
+	@Override
+	public String setAssignmentScoreByRef(RefereeScoreModel refScoreModel) {
+		String ret="";
+		RefereeScoreEntity refEntity=null;
+		try {
+			UserEntity user= userRepository.findByEmail(refScoreModel.getUser_email());
+			Optional<EvaluationEntity> eva=evaluationRepository.findById(refScoreModel.getEvaluation_id());
+			if(user!=null && !eva.isEmpty()) {
+				AssignmentEntity assignment = assignmentRepository.findAllAssignmentForScoring(user.getId(),eva.get().getId());
+				if(assignment!=null) {
+					refEntity= new RefereeScoreEntity();
+					refEntity.setAssignmentId(assignment);
+					refEntity.setDescription(refScoreModel.getDescription());
+					refEntity.setScore(refScoreModel.getScore());
+					refEntity.setScoreFilePath("\\ref\\"+refScoreModel.getScoreFilePath());
+					refScoreRepository.save(refEntity);
+				}
+				assignment.setStatus(true);
+				assignmentRepository.save(assignment);
+			}
+			ret="Success";
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			ret="Failed";
+		}catch (NullPointerException e) {
+			e.printStackTrace();
+			ret="Failed";
+		}
+		return ret;
+	}
+
+	@Override
+	public RefereeScoreModel getRefScoreResult(RefereeScoreModel refScoreModel) {
+		try {
+			UserEntity user= userRepository.findByEmail(refScoreModel.getUser_email());
+			Optional<EvaluationEntity> eva=evaluationRepository.findById(refScoreModel.getEvaluation_id());
+			if(user!=null && !eva.isEmpty()) {
+				AssignmentEntity assignment = assignmentRepository.findAllAssignmentForScoring(user.getId(),eva.get().getId());
+				if(assignment!=null) {
+					RefereeScoreEntity refScore= refScoreRepository.findByAssignmentId(assignment.getId());
+					if(refScore!=null) {
+						refScoreModel.setDescription(refScore.getDescription());
+						refScoreModel.setScore(refScore.getScore());
+						refScoreModel.setScoreFilePath(refScore.getScoreFilePath());
+					}
+				}
+			}
+		}catch (NullPointerException e) {
+			return null;
+		}
+		catch (IllegalArgumentException e) {
+			return null;
+		}
+		return refScoreModel;
+	}
+
+	@Override
+	public List<String> getRefAllScore(Long evaluation_id) {
+		List<String> retList=new ArrayList<>();
+		try {
+			List<AssignmentEntity> getScore=assignmentRepository.findByRefScore(evaluation_id);
+			for (AssignmentEntity ass : getScore) {
+				RefereeScoreEntity refScore=refScoreRepository.findByAssignmentId(ass.getId());
+				if(refScore!=null) {
+					retList.add(refScore.getScore());
+				}
+			}
+		} catch (Exception e) {
+			return null;
+		}
+		return retList;
+	}
 }

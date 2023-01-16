@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	var token = localStorage.token;
-	var email;
 	if(token==null){
 		window.location.replace("../login.html");
 	}else{
@@ -50,7 +49,7 @@ $(document).ready(function(){
 		 var key=$("#evaluation_key").val();
 		 var upfiles=$("#btnUpload").text();
 		 var desc=$("#evaluation_description").val();
-		 if(!(title!=""||uni!=""||key!=""||upfiles!="Dosya Yükleme"||desc!="")){
+		 if((title!=""&&uni!=""&&key!=""&&upfiles!="Dosya Yükleme"&&desc!="")){
 				var toApply={}
 					toApply["email"]=$user;
 					toApply["title"]=title;
@@ -58,6 +57,7 @@ $(document).ready(function(){
 					toApply["key"]=key;
 					toApply["filePath"]=upfiles;
 					toApply["description"]=desc;
+					$('.loading-spinner').css("display","");
 					sendAjaxToApply(toApply);
 			}
 			else{
@@ -90,8 +90,7 @@ function mail_dogrulama(){
 function getUserInfo(){
 	var decoded = jwt_decode(localStorage.token);
 	const sub=decoded.sub.split("_");
-	email=sub[0];
-	document.getElementById("evaluation_email").value = email;
+	var email=sub[0];
 	sendAjaxUserInfo(email);
 }
 
@@ -104,18 +103,114 @@ function getUserInfo(){
 	        cache: false,
 	        timeout: 600000,	      
 	        success: function (data) {
-				$("#result1").css("display", "none");
-				successAlert("Başvuru");
+				if(data=="Success"){
+					$('.loading-spinner').css("display","");
+					$("#result1").css("display", "none");
+					successAlert("Başvuru");
+					window.location.replace("../pendingApplications.html");
+				}else{
+					Swal.fire({
+   						  title:'HATA',
+   					      text:'Başvuru Yapılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						});
+				}
 	        },
-	        error: function (e) {
-              
+	        error: function () {
+              	Swal.fire({
+   						  title:'HATA',
+   					      text:'Başvuru Yapılamadı',
+   						  icon:'error',
+   						  confirmButtonColor: "#696cff" 
+   						});
             }
 	    });
 	}
 	 $('#btnUpload').click(function(){
-		upControlFiles();
+		var who="author";
+		upControlFiles(who);
 	 });
-	 async function upControlFiles(){
+	  $('#btnUploadScoring').click(function(){
+		var who="ref";
+		upControlFiles(who);
+	 });
+	 $('#btnAssigmentFinish').click(function(){
+		 var desc=$("#assignment_description").val();
+		 var score=$("#assignment_point").val();
+		 var upfiles=$("#btnUploadScoring").text();
+		 if(desc=="" || score=="" ||  upfiles=="Puanlamayı Tamamla"){			
+			    $('.required ').css('border-color','#f5365c');
+			    $('#btnUploadScoring ').css('background-color','#f5365c');
+			    errorAlert("Puanlama");
+				var millisecondsToWait = 3000;
+             	setTimeout(function() {
+                $('.required ').css('border-color','none');
+                if( upfiles=="Dosya Yükle"){
+					$('#btnUploadScoring ').css('background-color','#5e72e4');
+				}
+				else{
+					$('#btnUploadScoring ').css('background-color','#2dce89');
+				}
+                
+             }, millisecondsToWait);
+		}else{
+			var obj={};
+			obj["user_email"]=$user;
+			obj["evaluation_id"]=$('#evaluation_id').val();
+			obj["score"]=score;
+			obj["description"]=desc;
+			obj["scoreFilePath"]=upfiles;
+			$('.loading-spinner').css("display","");
+			setAssignmentScoreByRef(obj);	
+	 	}
+	 });
+	 
+	 function setAssignmentScoreByRef(jsonreq){ 
+	    $.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/setAssignmentScoreByRef",
+	        data: JSON.stringify(jsonreq),
+	        cache: false,
+	        timeout: 600000,	      
+	        success: function (data) {
+				$("#assignment_description").val("");
+				$("#assignment_point").val("");
+				$("#btnUploadScoring").text("Dosya Yükle");
+				$('#btnUploadScoring ').css('background-color','#2dce89');
+				$('.loading-spinner').css("display","none");		
+				if(data=="Success"){
+					Swal.fire({
+						icon:'success',
+    			        title: "Puanlama Başarıyla Yapıldı",
+    			        position: "center",
+    			        timer: 1500,
+    			        showConfirmButton: !1,
+    			    });
+			    $('#exampleModalMessage').modal('hide');
+			       	 if($user!=null){
+			    		 var op={};
+						 op["email"]=$user;
+						 getAssignmentTable(op);
+			    	 }
+				}
+				
+	        },
+	        error: function () {
+			  $('.loading-spinner').css("display","none");
+              Swal.fire({
+						icon:'error',
+    			        title: "Puanlama Başarısız Oldu",
+    			        position: "center",
+    			        timer: 1500,
+    			        showConfirmButton: !1,
+    			    });
+            }
+	    });
+}
+	 
+	 async function upControlFiles(who){
 			
 		 const { value: file } = await Swal.fire({
 		  title: 'Dosya Seçiniz',
@@ -132,11 +227,18 @@ function getUserInfo(){
 			const fileType=file.name.split(".");
 			if(file.type=="application/pdf" && fileType[1]=="pdf"){
 				$('.loading-spinner').css("display","");
-				uploadFile(file);
+				uploadFile(file,who);
 			}
 		}
 		 if(file==null){
-		    const element= document.getElementById("btnUpload");
+			 const element=null;
+			try{
+			  element= document.getElementById("btnUpload");
+			}
+			catch(err){
+			  element= document.getElementById("btnUploadScoring");
+			}
+		   
 		    element.innerHTML="Dosya Yükle"; 
 		    element.style.backgroundColor="#5e72e4";
 		    errorAlert("Dosya Yükleme");
@@ -148,19 +250,28 @@ function getUserInfo(){
 			})
 		}				 
 	}
-	 async function uploadFile(file) {
+	 async function uploadFile(file,who) {
 		  let formData = new FormData(); 
 		  formData.append('file', file,file.name);
+		  formData.append('who', who);
 		  let response = await fetch('/upload', {
 		    method: "POST", 
 		    credentials: 'same-origin',
 		    body: formData
 		  }); 
-		  if (response.status == 200) {
-			 const element= document.getElementById("btnUpload");
-			 element.innerHTML=file.name;   
-			 element.style.backgroundColor="#2dce89";
+		  
+		  if (response.status == 200) {			
+			try{
+				const element=document.getElementById("btnUpload");
+				 element.innerHTML=file.name;   
+				 element.style.backgroundColor="#2dce89";
+			}catch(err){
+				const element= document.getElementById("btnUploadScoring");
+				 element.innerHTML=file.name;   
+				 element.style.backgroundColor="#2dce89";
+			}
 			 successAlert("Dosya Yükleme");
+			 $('.loading-spinner').css("display","none");
 		  }
 		  else{
 			  $('.loading-spinner').css("display","none");
@@ -214,7 +325,9 @@ function getUserInfo(){
 	        cache: false,
 	        timeout: 600000,	      
 	        success: function (data) {
-					document.getElementById("evaluation_name").value = data.firstName+" "+data.lastName;
+					$("#userOnline").text( data.firstName+" "+data.lastName );
+					$("#evaluation_name").val( data.firstName+" "+data.lastName );
+					$("#evaluation_email").val($user);
 				}
 	    });
 }
@@ -299,4 +412,5 @@ function sendAjaxUserChange(jsonreq){
               
             }
 	    });
+	    
 }

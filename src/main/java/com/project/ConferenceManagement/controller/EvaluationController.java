@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.ConferenceManagement.entity.UserEntity;
-import com.project.ConferenceManagement.model.AssignmentModel;
 import com.project.ConferenceManagement.model.EvaluationModel;
-import com.project.ConferenceManagement.model.RefResponseModel;
 import com.project.ConferenceManagement.model.UserResponse;
 import com.project.ConferenceManagement.repository.UserRepository;
 import com.project.ConferenceManagement.service.EvaluationService;
@@ -33,10 +30,20 @@ public class EvaluationController {
 	EvaluationService evaluationServiceImpl;
 	
 	 @PostMapping("/upload") 
-	  public ResponseEntity<?> handleFileUpload( @RequestParam("file") MultipartFile file ) {
-		String path="src\\main\\resources\\static\\upfiles\\";
+	  public ResponseEntity<?> handleFileUpload( @RequestParam("file") MultipartFile file,@RequestParam("who") String who ) {
+		 String path=null;
+		 if(who.equals("author")) {
+			path="src\\main\\resources\\static\\upfiles\\author\\";
+		}
+		 else{
+			 path="src\\main\\resources\\static\\upfiles\\ref\\";
+		 }
 	    String fileName = file.getOriginalFilename();
+	    File pathFile= new File(path);
 	    try {    	
+		    if(!pathFile.exists()) {
+		    	pathFile.mkdir();
+		    }
 	    	 File convertFile = new File(path+fileName);
 	         convertFile.createNewFile();
 	         FileOutputStream fout = new FileOutputStream(convertFile);
@@ -70,6 +77,15 @@ public class EvaluationController {
 	 @PostMapping("/getEvaluationTableForAll")
 	 public List<EvaluationModel> getEvaluationTableForRef(){
 		return evaluationServiceImpl.getEvaluationTableForAll();
+	 }	 
+	 @PostMapping("/changeStatusEvaByOKB")
+	 public Boolean changeStatusEvaByOKB(@RequestBody EvaluationModel evaluationModel){
+		return evaluationServiceImpl.changeStatusEvaByOKB(evaluationModel.getId());
+	 }	 
+	 
+	 @PostMapping("/setEvulationFinishByOKB")
+	 public Boolean setEvulationFinishByOKB(@RequestBody EvaluationModel evaluationModel){
+		return evaluationServiceImpl.setEvulationFinishByOKB(evaluationModel);
 	 }	 
 	 
 }

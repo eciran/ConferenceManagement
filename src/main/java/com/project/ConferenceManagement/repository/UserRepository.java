@@ -26,8 +26,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>{
 	@Query(value = "select count(id) from UserEntity where registerDate > :registerDate")
 	String getuserLastRegister(@Param("registerDate") Date registerDate);
 	
-	@Query(value="select * from user where role=2", nativeQuery = true)
+	@Query(value="select * from user where role='REFEREE'", nativeQuery = true)
 	List<UserEntity> getRefList();
+
+	@Query(value="select * from user where role='AUTHOR'", nativeQuery = true)
+	List<UserEntity> getAuthorList();
 	
 
 }
